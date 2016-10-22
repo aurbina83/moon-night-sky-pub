@@ -1,0 +1,37 @@
+<!--
+  Generated template for the WelcomePage page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+    <ion-navbar color="dblue">
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>WELCOME</ion-title>
+    </ion-navbar>
+</ion-header>
+
+
+<ion-content scroll="false">
+
+    <div class="welcome">
+        <div class="browse flex" tappable (click)="browse()">
+            <h1>BROWSE</h1>
+            <div class="after"></div>
+        </div>
+        <div class="create flex" tappable (click)="create()">
+            <h1>CREATE</h1>
+            <div class="after"></div>
+        </div>
+    </div>
+    <!-- <div class="welcome">
+        <button dred block (click)="browse()">
+            BROWSE EVENTS
+        </button>
+        <button dred block (click)="create()">
+            CREATE EVENT
+        </button>
+    </div> -->
+</ion-content>

@@ -1,0 +1,25 @@
+
+    .pending {
+
+        h1 {
+            text-align: center;
+        }
+
+
+        .content{
+            h6 {
+                font-weight: light !important;
+            }
+
+            .accept{
+                color: green;
+            }
+            .deny{
+                color: red;
+            }
+        }
+
+        button {
+            margin: 5px 0;
+        }
+    }

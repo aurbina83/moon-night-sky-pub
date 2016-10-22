@@ -1,0 +1,114 @@
+// http://ionicframework.com/docs/v2/theming/
+
+
+// App Global Sass
+// --------------------------------------------------
+// Put style rules here that you want to apply globally. These
+// styles are for the entire app and not just one component.
+// Additionally, this file can be also used as an entry point
+// to import other Sass files to be included in the output CSS.
+//
+// Shared Sass variables, which can be used to adjust Ionic's
+// default Sass variables, belong in "theme/variables.scss".
+//
+// To declare rules for a specific mode, create a child rule
+// for the .md, .ios, or .wp mode classes. The mode class is
+// automatically applied to the <body> element in the app.
+
+@import 'https://fonts.googleapis.com/css?family=Montserrat:400,700|Open+Sans:300,400,600|family=Roboto:100';
+
+.toolbar-title {
+    font-family: "Roboto", sans-serif;
+    color: white !important;
+    font-weight: 100;
+}
+.toastSuccess {
+    .toast-container {
+        background-color: #73be73;
+    }
+}
+.toastError {
+    .toast-container {
+        background-color: #cd6062;
+    }
+}
+
+ion-backdrop {
+    opacity: 0.5 !important;
+    background-color: #a3a1a1;
+}
+
+.loading-wrapper {
+    background-color: rgba(143, 141, 141, 0.0) !important;
+}
+
+
+app-menu {
+    $SIDEMENU_TRANSPARENCY: rgba(255,255,255,0.4);
+    .toolbar-item {
+        background-color: #053c5e;
+        color: white;
+        font-family: "Open Sans", sans-serif;
+        ion-title {
+            font-family: "Montserrat";
+            text-align: center;
+        }
+    }
+
+    .foot {
+        background-color: #A31621;
+        color: white;
+        font-weight: bold;
+        ion-icon {
+            font-weight: bold;
+        }
+    }
+
+
+    .brand {
+        font-size: 20px !important;
+        text-align: center;
+    }
+    .sidemen {
+        /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#053c5e+0,37718e+100 */
+        background: #053c5e;
+        /* Old browsers */
+        background: -moz-linear-gradient(left, #053c5e 0%, #37718e 100%) !important;
+        /* FF3.6-15 */
+        background: -webkit-linear-gradient(left, #053c5e 0%,#37718e 100%) !important;
+        /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to right, #053c5e 0%,#37718e 100%) !important;
+        /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=  '#053c5e', endColorstr='#37718e',GradientType=1 ) !important;
+        /* IE6-9 */
+        color: white;
+        width: 100%;
+        ion-icon {
+            padding: 0 10px;
+        }
+
+        .profile {
+            border-bottom: 2px solid $SIDEMENU_TRANSPARENCY !important;
+            h3{
+                font-size: 15px;
+                text-transform: uppercase;
+            }
+            img {
+                border: 2px solid $SIDEMENU_TRANSPARENCY;
+                border-radius: 50%;
+                width: 50px;
+                height: auto;
+            }
+        }
+        .menitem {
+            cursor: pointer;
+            color: white;
+            padding-top: 5px !important;
+            // border-top: 1px solid $SIDEMENU_TRANSPARENCY !important;
+            border-bottom: 1px solid $SIDEMENU_TRANSPARENCY !important;
+            &:active {
+                background: $SIDEMENU_TRANSPARENCY !important;
+            }
+        }
+    }
+}

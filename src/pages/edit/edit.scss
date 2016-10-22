@@ -1,0 +1,95 @@
+edit-page{
+    .edit {
+        background-color: white;
+    }
+    .container {
+        height: 100%;
+        .content {
+            height: 70vh;
+            display: flex;
+            justify-content: center;
+            align-content: center;
+            flex-direction: column;
+            padding: 20px;
+            ion-input {
+                border: 1px solid #b7b7b7 !important;
+                border-radius: 2px !important;
+                box-shadow: 2px 2px 2px 0 rgba(31,31,33,0.2) inset !important;
+                text-shadow: 1px 1px 0 rgba(255,255,255,0.66) !important;
+                padding: 5px;
+            }
+            ion-textarea {
+                border: 1px solid #b7b7b7 !important;
+                border-radius: 2px !important;
+                box-shadow: 2px 2px 2px 0 rgba(31,31,33,0.2) inset !important;
+                text-shadow: 1px 1px 0 rgba(255,255,255,0.66) !important;
+                padding: 5px;
+            }
+            ion-datetime,
+            ion-select {
+                border: 1px solid #b7b7b7 !important;
+                border-radius: 2px !important;
+                box-shadow: 2px 2px 2px 0 rgba(31,31,33,0.2) inset !important;
+                text-shadow: 1px 1px 0 rgba(255,255,255,0.66) !important;
+                padding: 5%;
+                height: 50px;
+                width: 100%;
+            }
+            p {
+                font-family: "Open Sans", sans-serif;
+                font-size: 10px;
+                margin-left: 14px;
+                margin-top: 5px;
+                margin-bottom: 20px;
+                color: #343434;
+            }
+            .ion-button {
+                font-family: "Montserrat", sans-serif;
+            }
+        }
+        ion-row {
+            margin-left: 30px;
+            position: relative;
+            img {
+                margin-top: 5px;
+                margin-left: 5px;
+                height: 30px;
+                width: 50px;
+            }
+        }
+    }
+    .list {
+        display: flex;
+        flex-direction: column;
+        .front {
+            display: flex;
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            background-color: #053C5E;
+            border-bottom: 1px solid  rgba(255,255,255,0.4);
+            flex-grow: 1;
+            flex-shrink: 1;
+            flex-basis: auto;
+            &:active {
+                background-color: #37718E;
+            }
+        }
+        .subtn {
+            background-color: #A31621;
+
+            &:active {
+                background-color: #DB222A;
+            }
+        }
+    }
+    .bar {
+        background-color: red;
+        color: white;
+        padding: 15px;
+        font-size: 15px;
+        font-family: "Montserrat", sans-serif;
+    }
+
+}

@@ -1,0 +1,25 @@
+<ion-menu [content]="content" id="menu1">
+
+    <ion-content class="sidemen">
+        <ion-toolbar color="dblue" (click)="welcome()" tappable>
+            <h2 class="toolbar-item brand">Veteran Connect</h2>
+        </ion-toolbar>
+        
+        <ion-item class="toolbar-item profile" no-lines (click)="welcome()" tappable>
+            <!-- <ion-avatar item-left> -->
+            <img item-left src="{{status.imgUrl}}" alt="">
+            <!-- </ion-avatar> -->
+            <h3>{{status.name}}</h3>
+        </ion-item>
+        <ion-list no-lines class="list">
+            <ion-item *ngFor="let p of pages" (click)="openPage(p)" class=" sidemen animated menitem slideInUp" tappable>
+                <ion-icon name="{{p.icon}}" large></ion-icon> {{p.title}}
+            </ion-item>
+            <ion-item (click)="logout()" class="foot" tappable no-lines>
+                <ion-icon name="log-out" large></ion-icon> Log Out
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-menu>
+
+<ion-nav [root]="rootPage" #content swipeBackEnabled="true"></ion-nav>

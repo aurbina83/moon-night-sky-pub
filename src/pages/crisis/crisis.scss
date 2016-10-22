@@ -1,0 +1,40 @@
+crisis-page{
+    .crisis {
+        background-color: #cbcbcb;
+
+        ion-list-header {
+            background-color: #909ba2;
+            color: white;
+            font-weight: bold;
+
+            span {
+                font-size: 11px !important;
+                font-weight: lighter;
+            }
+        }
+
+        ion-card {
+            margin-bottom: 20px;
+
+            ion-card-title {
+                font-weight: bold;
+            }
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .ion-button {
+            height: 50px;
+            font-size: 15px;
+        }
+
+        img {
+            padding: 20px;
+            // background-color: #DB222A;
+            background-color: #37718E;
+        }
+    }
+
+}

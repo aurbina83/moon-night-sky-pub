@@ -1,0 +1,37 @@
+<!--
+  Generated template for the EventsAttendingPage page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar color="dblue">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>EVENTS YOU'RE IN</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding class="events-attending">
+    <ion-list>
+        <ion-item-sliding *ngFor="let e of events" tappable>
+            <ion-item (click)="go(e)" text-wrap>
+                <ion-thumbnail item-left>
+                    <img src="assets/{{e.eventCreator.branchImg}}" alt="">
+                </ion-thumbnail>
+                <h2>{{e.title}}</h2>
+                <h3>@ {{e.name}}</h3>
+                <p>{{e.dateTime | moments: "dddd, MMM Do @ h:mm a"}} </p>
+                <p>Number of people attending: {{e.attending.length + 1}}</p>
+                <ion-icon name="arrow-back" item-right color="warn"></ion-icon>
+            </ion-item>
+            <ion-item-options side="right">
+                <button color=warn ion-button (click)="backout(e)">
+                    <ion-icon name="backspace" ></ion-icon>Back Out
+                </button>
+            </ion-item-options>
+        </ion-item-sliding>
+    </ion-list>
+</ion-content>

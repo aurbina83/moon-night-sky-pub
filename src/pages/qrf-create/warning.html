@@ -1,0 +1,24 @@
+<ion-header>
+
+    <ion-navbar color="dred">
+        <ion-title>WARNING</ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+<ion-content class="warning">
+    <div class="body">
+        <h3 class="header">This is NOT Intended for Crisis Intervention!</h3>
+        <br>
+        <p>
+            Talking to and meeting with others who are not trained in handling crisis situations can be unsafe for both parties.
+            <br><br>
+            If you are having <strong>real</strong> thoughts of harming yourself or others, we have resources available to you.
+        </p>
+    </div>
+    <div class="cta">
+        <h5>Are you in danger of harming yourself right now?</h5><br>
+        <button block ion-button color="dblue" (click)="close()">NO</button>
+        <button block ion-button color="dred" (click)="crisis()">YES</button>
+    </div>
+</ion-content>
