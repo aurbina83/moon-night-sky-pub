@@ -77,12 +77,24 @@ export class QrfCreatePage {
                     this.navCtrl.setRoot(CrisisPage);
                 } else {
                     this.warningModal = this.modalCtrl.create(Warning);
-                    this.warningModal.onDidDismiss(() => this.view = true);
+                    this.warningModal.onDidDismiss((data) => {
+                        if(data == 'crisis') {
+                            this.navCtrl.setRoot(CrisisPage);
+                        } else {
+                            this.view = true
+                        }
+                    });
                     this.warningModal.present();
                 }
             }, err => {
                     this.warningModal = this.modalCtrl.create(Warning);
-                    this.warningModal.onDidDismiss(() => this.view = true);
+                    this.warningModal.onDidDismiss((data) => {
+                        if(data == 'crisis') {
+                            this.navCtrl.setRoot(CrisisPage);
+                        } else {
+                            this.view = true
+                        }
+                    });
                     this.warningModal.present();
             })
         }, 75);
@@ -106,9 +118,7 @@ export class Warning {
         let date = new Date();
         date = new Date(date.setHours(date.getHours() + 24));
         NativeStorage.setItem("crisis", date);
-        this.viewCtrl.dismiss().then(()=>{
-            this.navCtrl.setRoot(CrisisPage);
-        })
+        this.viewCtrl.dismiss('crisis');
     }
 
     close() {
