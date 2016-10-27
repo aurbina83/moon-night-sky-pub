@@ -8,15 +8,14 @@ import { EventDetailsPage } from '../pages/event-details/event-details';
 import {MyEventsPage} from '../pages/my-events/my-events';
 import { LoginPage } from '../pages/login/login';
 import {LoadingPage} from '../pages/loading/loading';
-import { CommentsPage } from '../pages/comments/comments';
 import { QrfCreatePage } from '../pages/qrf-create/qrf-create';
 import {QrfListPage} from '../pages/qrf-list/qrf-list';
 import { QrfChatPage } from '../pages/qrf-chat/qrf-chat';
 import { QrfAcceptPage } from '../pages/qrf-accept/qrf-accept';
 import {UserService} from '../providers/user-service/user-service';
 import {EventService} from '../providers/event-service/event-service';
+import {QrfService} from '../providers/qrf-service/qrf-service';
 import {WelcomePage} from '../pages/welcome/welcome';
-import { PendingPage } from '../pages/pending/pending';
 
 @Component({
     selector: 'app-menu',
@@ -37,6 +36,7 @@ export class MyApp {
         public menu: MenuController,
         public UserService: UserService,
         public EventService: EventService,
+        public QrfService: QrfService,
         public alertCtrl: AlertController) {
         this.status = UserService.status;
         this.initializeApp();
@@ -64,7 +64,7 @@ export class MyApp {
             let notificationReceivedCallback = (data) => {
                 if (data.payload.additionalData) {
                     let d = data.payload.additionalData;
-                    if (d.type && d.type == "qrf" || data.isAppInFocus) {
+                    if (d.type && d.type == "qrf" && data.isAppInFocus) {
                         this.alertQRF(data);
                     }
                 } else return;
@@ -77,8 +77,15 @@ export class MyApp {
                 }
                 else if (data.notification.payload.additionalData) {
                     let d = JSON.parse(data.notification.payload.additionalData);
+                    console.log(d);
                     if (d.type && d.type == "deleted") this.nav.push(BrowsePage);
-                    if (d.type && d.type == "qrf") this.nav.push(QrfAcceptPage, { qrf: d.qrfObj });
+                    if (d.type && d.type == "qrf") {
+                        this.QrfService.getOne(d.id).then((data) => {
+                            this.nav.push(QrfAcceptPage, { qrf: data });
+                        }, (err)=>{
+                            console.log(err.message);
+                        })
+                    }
                     if (d.type && d.type == "qrfChat") this.nav.push(QrfChatPage, { _id: d.id });
                     if (d.type && d.type == "event") {
                         this.EventService.getOne(d.id).then((data) =>{
@@ -124,26 +131,32 @@ export class MyApp {
 
     alertQRF(data) {
         let d = data.payload.additionalData;
-        let alert = this.alertCtrl.create({
-            title: data.payload.title,
-            message: data.payload.body,
-            buttons: [
-                {
-                    text: 'Ignore',
-                    role: 'destructive',
-                    handler: data => {
-                        return;
+        let event;
+        this.QrfService.getOne(d.id).then((event)=>{
+            let alert = this.alertCtrl.create({
+                title: data.payload.title,
+                message: data.payload.body,
+                buttons: [
+                    {
+                        text: 'Ignore',
+                        role: 'destructive',
+                        handler: data => {
+                            return;
+                        }
+                    },
+                    {
+                        text: 'Help',
+                        handler: data => {
+                            this.nav.push(QrfAcceptPage, { qrf: event });
+                        }
                     }
-                },
-                {
-                    text: 'Help',
-                    handler: data => {
-                        this.nav.setRoot(QrfAcceptPage, { qrf: d.qrfObj });
-                    }
-                }
-            ]
+                ]
+            })
+            alert.present();
+        }, (err)=>{
+            console.log(err);
         })
-        alert.present();
+
     }
 
     logout() {

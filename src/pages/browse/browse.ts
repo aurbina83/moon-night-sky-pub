@@ -94,6 +94,9 @@ export class BrowsePage {
     }
 
     attend(event) {
+        if (event.eventCreator._id == this.status._id) {
+            return this.showAlert();
+        }
         for (let i = 0; i < event.attending.length; i++) {
             if (event.attending[i]._id == this.status._id) {
                 return this.showAlert();

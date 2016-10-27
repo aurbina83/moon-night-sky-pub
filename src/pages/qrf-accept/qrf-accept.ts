@@ -16,10 +16,21 @@ import { WelcomePage } from '../welcome/welcome';
     templateUrl: 'qrf-accept.html'
 })
 export class QrfAcceptPage {
-    public qrf;
+    public qrf= {
+        _id: null,
+        description: null,
+        creatorInfo: {
+            firstName: null,
+            lastName: null,
+            imgUrl: null,
+            branch: null,
+            branchImg: null
+        }
+    };
 
     constructor(private navCtrl: NavController, private params: NavParams, private qrfService: QrfService, private alertService: Alerts) {
         this.qrf = params.get("qrf");
+        console.log(this.qrf);
     }
 
     decline(){

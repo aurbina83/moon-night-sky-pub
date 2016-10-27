@@ -6,7 +6,6 @@ import {PendingPage} from '../pending/pending';
 import { QrfChatPage } from '../qrf-chat/qrf-chat';
 import { QrfAcceptPage } from '../qrf-accept/qrf-accept';
 import { EventDetailsPage } from '../event-details/event-details';
-import { CommentsPage } from '../comments/comments';
 import { UserService } from '../../providers/user-service/user-service';
 import { EventService } from '../../providers/event-service/event-service';
 import { Alerts } from '../../providers/alerts/alerts';

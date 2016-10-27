@@ -3,7 +3,6 @@ import { NavController, NavParams } from 'ionic-angular';
 import { EventService } from '../../providers/event-service/event-service';
 import { CommentsPage } from '../comments/comments';
 import { Alerts } from '../../providers/alerts/alerts';
-import { WelcomePage } from '../welcome/welcome';
 
 /*
   Generated class for the EventDetailsPage page.
