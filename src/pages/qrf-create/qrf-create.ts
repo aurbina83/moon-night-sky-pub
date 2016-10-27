@@ -66,7 +66,6 @@ export class QrfCreatePage {
                 branchImg: `images/${this.status.branch.toLowerCase()}.png`
             }
         }
-        console.log(this.qrf);
     }
 
     ionViewDidLoad() {

@@ -77,7 +77,6 @@ export class MyApp {
                 }
                 else if (data.notification.payload.additionalData) {
                     let d = JSON.parse(data.notification.payload.additionalData);
-                    console.log(d);
                     if (d.type && d.type == "deleted") this.nav.push(BrowsePage);
                     if (d.type && d.type == "qrf") {
                         this.QrfService.getOne(d.id).then((data) => {

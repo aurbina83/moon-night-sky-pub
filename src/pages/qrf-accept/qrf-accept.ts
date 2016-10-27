@@ -30,7 +30,6 @@ export class QrfAcceptPage {
 
     constructor(private navCtrl: NavController, private params: NavParams, private qrfService: QrfService, private alertService: Alerts) {
         this.qrf = params.get("qrf");
-        console.log(this.qrf);
     }
 
     decline(){
