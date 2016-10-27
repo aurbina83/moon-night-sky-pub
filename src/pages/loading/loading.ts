@@ -40,7 +40,6 @@ export class LoadingPage {
         } else {
             setTimeout(()=>{
                 this.check();
-                console.log('timeout init');
             }, 300);
         }
     }

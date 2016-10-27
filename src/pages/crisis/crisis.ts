@@ -22,8 +22,4 @@ export class CrisisPage {
         this.menu.swipeEnable(true, 'menu1');
     }
 
-    ionViewDidLoad(){
-        console.log("crisis loaded");
-    }
-
 }
