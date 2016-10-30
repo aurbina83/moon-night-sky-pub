@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, MenuController } from 'ionic-angular';
+import { NavController, MenuController, LoadingController, AlertController} from 'ionic-angular';
 import { UserService } from '../../providers/user-service/user-service';
 import { Alerts } from '../../providers/alerts/alerts';
 import { WelcomePage } from '../welcome/welcome';
@@ -24,7 +24,7 @@ export class VerifyPage {
     public dob;
 
 
-    constructor(private navCtrl: NavController, private menu: MenuController, private UserService: UserService, private alerts: Alerts) {}
+    constructor(private navCtrl: NavController, private menu: MenuController, private UserService: UserService, private alerts: Alerts, private loadingCtrl: LoadingController, private alertCtrl: AlertController) {}
 
     ionViewDidEnter() {
         this.menu.swipeEnable(false, 'menu1');
@@ -34,8 +34,34 @@ export class VerifyPage {
         this.menu.swipeEnable(true, 'menu1');
     }
 
+    public confirm(){
+        console.log("confirming");
+        let alert = this.alertCtrl.create({
+            title: 'Confirm your information',
+            message: `Last Name: ${this.name}, DOB: ${this.dob}, Service Date: ${this.date}`,
+            buttons:[
+                {
+                    text: "Cancel",
+                    role: 'destructive',
+                    handler: data =>{
+                        return;
+                    }
+                },
+                {
+                    text: 'Continue',
+                    handler: data =>{
+                        this.verify();
+                    }
+                }
+            ]
+        })
+        alert.present();
+    }
+
 
     public verify() {
+        let load = this.loadingCtrl.create({});
+        load.present();
         this.date = moment(this.date).format("MM/DD/YYYY");
         this.dob = moment(this.dob).format("MM/DD/YYYY");
 
@@ -47,11 +73,15 @@ export class VerifyPage {
             dob: this.dob
         }
         this.UserService.verifyUser(body).then((res) =>{
-            this.alerts.toast("Service Verified!", null);
-            this.navCtrl.setRoot(WelcomePage);
+            load.dismiss().then(()=>{
+                this.alerts.toast("Service Verified!", null);
+                this.navCtrl.setRoot(WelcomePage);
+            })
         }, (err) =>{
-            this.alerts.toast(err, null);
-            this.navCtrl.setRoot(PendingPage);
+            load.dismiss().then(()=>{
+                this.alerts.toast(err.message, null);
+                this.navCtrl.setRoot(PendingPage);
+            })
         })
     }
 }

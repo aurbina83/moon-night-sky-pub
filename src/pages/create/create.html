@@ -119,7 +119,6 @@
                             <ion-option *ngFor="let guest of guestArray; let i=index" [value]="guestArray[i]">{{guestArray[i]}}</ion-option>
                         </ion-select>
                 </ion-item>
-                <p text-left>*For events larger than 99 guests, keep this blank for unlimited guests. <br /><br>However, there'll be no communication available with people attending.</p>
                 <button block ion-button color="lred"  [disabled]="!event.dateTime" (click)="subEvent()">Submit</button>
                 <button block ion-button color="lred" (click)="prev(5)">Back</button>
             </div>

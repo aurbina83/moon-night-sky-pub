@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, MenuController, LoadingController} from 'ionic-angular';
 import { WelcomePage } from '../welcome/welcome';
+import { RegisterPage } from '../register/register';
+import { PendingPage} from '../pending/pending';
 import {UserService} from '../../providers/user-service/user-service';
 import {Alerts} from '../../providers/alerts/alerts';
 
@@ -38,7 +40,9 @@ export class LoginPage {
         this.UserService.login().then((res) => {
             this.status = this.UserService.status;
             loading.dismiss().then(()=>{
-                this.navCtrl.setRoot(WelcomePage);
+                if(!this.status.branch && !this.status.verified) this.navCtrl.setRoot(RegisterPage);
+                if(this.status.branch && !this.status.verified) this.navCtrl.setRoot(PendingPage);
+                if(this.status.branch && this.status.verified) this.navCtrl.setRoot(WelcomePage);
             });
         }, (err) => {
             loading.dismiss().then(() => {

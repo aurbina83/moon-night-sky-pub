@@ -61,52 +61,101 @@ export class MyApp {
             // Here you can do any higher level native things you might need.
             StatusBar.styleLightContent();
 
-            let notificationReceivedCallback = (data) => {
-                if (data.payload.additionalData) {
-                    let d = data.payload.additionalData;
-                    if (d.type && d.type == "qrf" && data.isAppInFocus) {
-                        this.alertQRF(data);
-                    }
-                } else return;
-            }
+            // let notificationReceivedCallback = (data) => {
+            //     console.log(data);
+            //     console.log('notificationReceivedCallback');
+            //     if (data.payload.additionalData) {
+            //         let d = data.payload.additionalData;
+            //         if (d.type && d.type == "qrf") {
+            //             this.alertQRF(data);
+            //         }
+            //     } else return;
+            // }
+            //
+            // let notificationOpenedCallback = (data) => {
+            //     console.log(data);
+            //     console.log('notificationOpenedCallback');
+            //     let view = this.nav.getActive();
+            //     if (view.instance instanceof LoadingPage || view.instance instanceof LoginPage) {
+            //         this.notificationLoading(data);
+            //     }
+            //     else if (data.notification.payload.additionalData) {
+            //         let d;
+            //         if (typeof data.notification.payload.additionalData == 'string') {
+            //             d = JSON.parse(data.notification.payload.additionalData);
+            //         } else {
+            //             d = data.notification.payload.additionalData;
+            //         }
+            //         if (d.type && d.type == "deleted") this.nav.push(BrowsePage);
+            //         if (d.type && d.type == "qrf") {
+            //             this.QrfService.getOne(d.id).then((data) => {
+            //                 this.nav.push(QrfAcceptPage, { qrf: data });
+            //             }, (err) => {
+            //                 console.log(err.message);
+            //             })
+            //         }
+            //         if (d.type && d.type == "qrfChat") this.nav.push(QrfChatPage, { _id: d.id });
+            //         if (d.type && d.type == "event") {
+            //             this.EventService.getOne(d.id).then((data) => {
+            //                 this.nav.push(EventDetailsPage, { event: data });
+            //             }, (err) => {
+            //                 console.log(err.message);
+            //             })
+            //         }
+            //     } else return;
+            // }
 
             let notificationOpenedCallback = (data) => {
-                let view = this.nav.getActive();
-                if(view.instance instanceof LoadingPage || view.instance instanceof LoginPage){
-                    this.notificationLoading(data);
+                if (!data.isActive) {
+                    let view = this.nav.getActive();
+                    if (view.instance instanceof LoadingPage || view.instance instanceof LoginPage) {
+                        this.notificationLoading(data);
+                    }
+                    else if (data.additionalData) {
+                        let d = data.additionalData;
+                        if (d.type && d.type == "deleted") this.nav.push(BrowsePage);
+                        if (d.type && d.type == "qrf") {
+                            this.QrfService.getOne(d.id).then((data) => {
+                                this.nav.push(QrfAcceptPage, { qrf: data });
+                            }, (err) => {
+                                console.log(err.message);
+                            })
+                        }
+                        if (d.type && d.type == "qrfChat") this.nav.push(QrfChatPage, { _id: d.id });
+                        if (d.type && d.type == "event") {
+                            this.EventService.getOne(d.id).then((data) => {
+                                this.nav.push(EventDetailsPage, { event: data });
+                            }, (err) => {
+                                console.log(err.message);
+                            })
+                        }
+                    } else return;
                 }
-                else if (data.notification.payload.additionalData) {
-                    let d = JSON.parse(data.notification.payload.additionalData);
-                    if (d.type && d.type == "deleted") this.nav.push(BrowsePage);
-                    if (d.type && d.type == "qrf") {
-                        this.QrfService.getOne(d.id).then((data) => {
-                            this.nav.push(QrfAcceptPage, { qrf: data });
-                        }, (err)=>{
-                            console.log(err.message);
-                        })
-                    }
-                    if (d.type && d.type == "qrfChat") this.nav.push(QrfChatPage, { _id: d.id });
-                    if (d.type && d.type == "event") {
-                        this.EventService.getOne(d.id).then((data) =>{
-                            this.nav.push(EventDetailsPage, { event: data });
-                        }, (err)=>{
-                            console.log(err.message);
-                        })
-                    }
-                } else return;
+                if (data.isActive) {
+                    if (data.additionalData) {
+                        let d = data.additionalData;
+                        if (d.type && d.type == "qrf") {
+                            this.alertQRF(data);
+                        }
+                    } else return;
+                }
             }
 
-            let iosSettings = {};
-            iosSettings['kOSSettingsKeyAutoPrompt'] = true;
-            iosSettings['kOSSettingsKeyInAppLaunchUrl'] = false;
 
-            window['plugins'].OneSignal
-                .startInit("30dda287-6c9b-42b6-a979-07089bfe9784", "531852131773")
-                .inFocusDisplaying(window['plugins'].OneSignal.OSInFocusDisplayOption.None)
-                .handleNotificationOpened(notificationOpenedCallback)
-                .handleNotificationReceived(notificationReceivedCallback)
-                .iOSSettings(iosSettings)
-                .endInit();
+            // let iosSettings = {};
+            // iosSettings['kOSSettingsKeyAutoPrompt'] = true;
+            // iosSettings['kOSSettingsKeyInAppLaunchUrl'] = false;
+            //
+            // window['plugins'].OneSignal
+            //     .startInit("30dda287-6c9b-42b6-a979-07089bfe9784", "531852131773")
+            //     .inFocusDisplaying(window['plugins'].OneSignal.OSInFocusDisplayOption.None)
+            //     .handleNotificationOpened(notificationOpenedCallback)
+            //     .handleNotificationReceived(notificationReceivedCallback)
+            //     .iOSSettings(iosSettings)
+            //     .endInit();
+
+            window['plugins'].OneSignal.init("30dda287-6c9b-42b6-a979-07089bfe9784",
+                { googleProjectNumber: "531852131773", autoRegister: true }, notificationOpenedCallback);
 
             // Deeplinks.routeWithNavController(this.nav, {
             // }).subscribe((matched) => {
@@ -118,7 +167,7 @@ export class MyApp {
         });
     }
 
-    public notificationLoading(data){
+    public notificationLoading(data) {
         NativeStorage.setItem('notification', data);
     }
 
@@ -129,12 +178,14 @@ export class MyApp {
     }
 
     alertQRF(data) {
-        let d = data.payload.additionalData;
-        let event;
-        this.QrfService.getOne(d.id).then((event)=>{
+        // let d = data.payload.additionalData;
+        let d = data.additionalData;
+        this.QrfService.getOne(d.id).then((event) => {
             let alert = this.alertCtrl.create({
-                title: data.payload.title,
-                message: data.payload.body,
+                title: d.title,
+                message: data.message,
+                // title: data.payload.title,
+                // message: data.payload.body,
                 buttons: [
                     {
                         text: 'Ignore',
@@ -152,7 +203,7 @@ export class MyApp {
                 ]
             })
             alert.present();
-        }, (err)=>{
+        }, (err) => {
             console.log(err);
         })
 

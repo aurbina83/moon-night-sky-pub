@@ -7,13 +7,14 @@
 <ion-header>
 
     <ion-navbar color="dblue">
-        <ion-title>VERIFY</ion-title>
+        <ion-title>VERIFY SERVICE</ion-title>
     </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+    <h3 text-center>Verify Military Service</h3>
     <ion-list no-lines>
         <ion-item>
             <ion-label floating>Last Name</ion-label>
@@ -23,8 +24,9 @@
             <ion-label floating>Date of Birth</ion-label>
             <ion-datetime displayFormat="MMM DD, YYYY"  pickerFormat="MMM/DD/YYYY" [(ngModel)]="dob"></ion-datetime>
         </ion-item>
-        <ion-item>
-            <h4>
+        <br>
+        <ion-item text-center text-wrap>
+            <h4 color="dred">
                 Select any date you served on Active Duty after January 1, 1986. You must have been Active Duty on this date and served 30 consecutive, previous days on Active Duty.
                 <br><br>
                 If you're currently on Active Duty (and have been for 30 days), select yesterday's date.
@@ -35,5 +37,5 @@
             <ion-datetime displayFormat="MMM DD, YYYY"   pickerFormat="MMM/DD/YYYY" [(ngModel)]="date"></ion-datetime>
         </ion-item>
     </ion-list>
-    <button ion-button color="dred" block (click)="verify()" [disabled]="!name || !date || !dob">Verify Service</button>
+    <button ion-button color="dred" block (click)="confirm()" [disabled]="!name || !date || !dob">Verify Service</button>
 </ion-content>

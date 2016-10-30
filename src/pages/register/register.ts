@@ -4,6 +4,7 @@ import { NavController, MenuController, LoadingController } from 'ionic-angular'
 import { Validate } from '../../providers/validate/validate';
 import { UserService } from '../../providers/user-service/user-service';
 import {VerifyPage} from '../verify/verify';
+import {WelcomePage} from '../welcome/welcome';
 import { Alerts } from '../../providers/alerts/alerts';
 /*
   Generated class for the RegisterPage page.
@@ -53,7 +54,7 @@ export class RegisterPage {
         this.user.mos = this.user.mos.toUpperCase();
         this.UserService.updateUser('register', this.status._id, this.user).then(() => {
             loader.dismiss();
-            this.navCtrl.setRoot(VerifyPage);
+            this.status.verified ? this.navCtrl.setRoot(WelcomePage) : this.navCtrl.setRoot(VerifyPage);
         }, err => {
             loader.dismiss();
             this.alerts.basic("Error", err.message);

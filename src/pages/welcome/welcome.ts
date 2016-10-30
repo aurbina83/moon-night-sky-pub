@@ -3,6 +3,7 @@ import { NavController, MenuController, LoadingController, ActionSheetController
 import { BrowsePage } from '../browse/browse';
 import { CreatePage } from '../create/create';
 import {PendingPage} from '../pending/pending';
+import {RegisterPage} from '../register/register';
 import { QrfChatPage } from '../qrf-chat/qrf-chat';
 import { QrfAcceptPage } from '../qrf-accept/qrf-accept';
 import { EventDetailsPage } from '../event-details/event-details';
@@ -30,10 +31,13 @@ export class WelcomePage {
 
 
     ionViewDidEnter() {
-        if(!this.status.verified){
+        console.log(this.status);
+        if(this.status.branch && !this.status.verified){
             this.navCtrl.setRoot(PendingPage);
         }
-        else {
+        else if(!this.status.branch){
+            this.navCtrl.setRoot(RegisterPage);
+        } else {
             this.pushToken();
             this.platform.ready().then(()=>{
                 this.notificationStore();
@@ -59,8 +63,13 @@ export class WelcomePage {
     }
 
     notificationCheck(data){
-        if (data.notification.payload.additionalData) {
-            let d = JSON.parse(data.notification.payload.additionalData);
+        if (data.additionalData) {
+            let d = data.additionalData;
+            // if(typeof data.notification.payload.additionalData == 'string') {
+            //     d = JSON.parse(data.notification.payload.additionalData);
+            // }else {
+            //     d = data.notification.payload.additionalData;
+            // }
             if (d.type && d.type == "deleted") this.navCtrl.push(BrowsePage);
             if (d.type && d.type == "qrf") this.navCtrl.push(QrfAcceptPage, { qrf: d.qrfObj });
             if (d.type && d.type == "qrfChat") this.navCtrl.push(QrfChatPage, { _id: d.id });
