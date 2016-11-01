@@ -31,7 +31,6 @@ export class WelcomePage {
 
 
     ionViewDidEnter() {
-        console.log(this.status);
         if(this.status.branch && !this.status.verified){
             this.navCtrl.setRoot(PendingPage);
         }
@@ -64,12 +63,7 @@ export class WelcomePage {
 
     notificationCheck(data){
         if (data.additionalData) {
-            let d = data.additionalData;
-            // if(typeof data.notification.payload.additionalData == 'string') {
-            //     d = JSON.parse(data.notification.payload.additionalData);
-            // }else {
-            //     d = data.notification.payload.additionalData;
-            // }
+            let d = data.notification.payload.additionalData;
             if (d.type && d.type == "deleted") this.navCtrl.push(BrowsePage);
             if (d.type && d.type == "qrf") this.navCtrl.push(QrfAcceptPage, { qrf: d.qrfObj });
             if (d.type && d.type == "qrfChat") this.navCtrl.push(QrfChatPage, { _id: d.id });

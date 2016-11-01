@@ -1,6 +1,6 @@
 declare var require;
 import { Component } from '@angular/core';
-import { NavController, MenuController, LoadingController } from 'ionic-angular';
+import { NavController, MenuController, LoadingController, Platform } from 'ionic-angular';
 import { Validate } from '../../providers/validate/validate';
 import { UserService } from '../../providers/user-service/user-service';
 import {VerifyPage} from '../verify/verify';
@@ -36,18 +36,17 @@ export class RegisterPage {
     mosTouch;
 
     constructor(private navCtrl: NavController, private menu: MenuController, private validator: Validate,
-        private UserService: UserService, private alerts: Alerts, private loadingCtrl: LoadingController) {
+        private UserService: UserService, private alerts: Alerts, private loadingCtrl: LoadingController, private platform: Platform) {
         this.status = UserService.status;
         this.user.branch = "Army";
         this.setMos();
-        UserService.getLocation();
+        this.platform.ready().then(()=>{
+            UserService.getLocation();
+        });
     }
 
     onSubmit() {
-        let loader = this.loadingCtrl.create({
-            content: "Stand By",
-            duration: 3000
-        });
+        let loader = this.loadingCtrl.create({});
 
         loader.present();
         this.user.email = this.user.email.toLowerCase().trim();

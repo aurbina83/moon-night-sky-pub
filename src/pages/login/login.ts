@@ -38,9 +38,9 @@ export class LoginPage {
         });
         loading.present();
         this.UserService.login().then((res) => {
-            this.status = this.UserService.status;
             loading.dismiss().then(()=>{
-                if(!this.status.branch && !this.status.verified) this.navCtrl.setRoot(RegisterPage);
+                this.status = this.UserService.status;
+                if(!this.status.branch) this.navCtrl.setRoot(RegisterPage);
                 if(this.status.branch && !this.status.verified) this.navCtrl.setRoot(PendingPage);
                 if(this.status.branch && this.status.verified) this.navCtrl.setRoot(WelcomePage);
             });
