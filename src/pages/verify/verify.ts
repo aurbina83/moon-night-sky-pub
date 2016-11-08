@@ -35,7 +35,6 @@ export class VerifyPage {
     }
 
     public confirm(){
-        console.log("confirming");
         let alert = this.alertCtrl.create({
             title: 'Confirm your information',
             message: `Last Name: ${this.name}, DOB: ${this.dob}, Service Date: ${this.date}`,

@@ -46,7 +46,7 @@
                     </ion-avatar>
                 </ion-col>
                 <ion-col>
-                    <h2>{{e.eventCreator.firstName}} {{e.eventCreator.lastName}}</h2>
+                    <h2>{{e.eventCreator.firstName}} {{e.eventCreator.lastName}} <ion-icon id="fbicon" [hidden]="!e.friends" name="logo-facebook" color="dblue"></ion-icon></h2>
                     <h6>{{e.eventCreator.branch}}</h6>
                 </ion-col>
             </ion-row>

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, ModalController, LoadingController, AlertController } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
 import { EventService } from '../../providers/event-service/event-service';
 import { UserService } from '../../providers/user-service/user-service';
 import { EventPreviewPage } from '../event-preview/event-preview';
@@ -21,8 +22,18 @@ export class BrowsePage {
     public events;
     public status;
     public query = { maxDist: null, lat: null, lng: null, skip: null };
+    public friends = [];
+    public storage;
 
     constructor(private navCtrl: NavController, private EventService: EventService, private UserService: UserService, private modalCtrl: ModalController, private alertService: Alerts, private loadingCtrl: LoadingController, private alertCtrl: AlertController) {
+        this.storage = new Storage();
+        this.storage.get("friends").then((data)=>{
+            if (data) {
+                data.forEach((d)=>{
+                    this.friends.push(d.id);
+                })
+            }
+        });
         UserService.checkLocation().then(() => {
             this.status = UserService.status;
             this.query.lng = this.status.loc[0];
@@ -56,6 +67,7 @@ export class BrowsePage {
         return new Promise((resolve, reject) => {
             this.EventService.getAll(this.query).then((data) => {
                 this.events = data;
+                if (this.events.length > 0) this.checkFriends(this.events);
                 this.query.skip += this.events.length;
                 resolve();
             }, (err) => {
@@ -63,6 +75,16 @@ export class BrowsePage {
                 reject(err);
             })
         })
+    }
+
+    public checkFriends(arr){
+        if (this.friends && this.friends.length > 0) {
+            arr.forEach((a)=>{
+                if (this.friends.indexOf(a.eventCreator.facebook.id) != -1) {
+                    a.friends = true;
+                }
+            })
+        } else return;
     }
 
     infinite(infiniteScroll){

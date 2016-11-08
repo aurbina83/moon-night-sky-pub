@@ -20,7 +20,7 @@ declare var facebookConnectPlugin;
 @Injectable()
 export class UserService {
 
-    public storage;
+    public storage: Storage;
     public token;
     public status = { _id: null, name: null, imgUrl: null, maxDist: null, loc: null, verified: null, branch: null, locStamp: null };
     public LOGIN_URL: string = "https://app.veteranconnect.co/api/v1/users";
@@ -35,10 +35,8 @@ export class UserService {
     // }
 
     constructor(private authHttp: AuthHttp, private http: Http, private alertCtrl: AlertController, private platform: Platform) {
-        if(this.getToken()) this.setUser();
-
         this.storage = new Storage();
-        this.tokenFetch();
+        this.getToken() ? this.setUser() : this.tokenFetch();
     }
 
 
@@ -79,6 +77,7 @@ export class UserService {
     }
 
     public setUser() {
+        this.token = this.getToken();
         let u = this.jwtHelper.decodeToken(this.token);
         this.status._id = u._id;
         this.status.name = u.firstName + " " + u.lastName;
@@ -134,6 +133,7 @@ export class UserService {
         this.token = null;
         localStorage.removeItem('id_token');
         this.storage.remove("id_token");
+        this.storage.remove("friends");
     }
 
     ///////////////////////////////////////////
@@ -158,11 +158,11 @@ export class UserService {
     fbLogin() {
         return new Promise((resolve, reject) => {
             facebookConnectPlugin.logout();
-            facebookConnectPlugin.login(['public_profile'], (response) => {
+            facebookConnectPlugin.login(['public_profile', 'user_friends'], (response) => {
                 resolve();
             }, (error) => {
                 let err = error;
-                reject(JSON.stringify(err));
+                reject(err);
             })
         })
     }
@@ -173,7 +173,7 @@ export class UserService {
                 if (response.status == "connected") {
                     let id = response.authResponse.userID;
                     let token = response.authResponse.accessToken;
-                    facebookConnectPlugin.api('/' + response.authResponse.userID + '?fields=id,first_name,last_name,picture.type(large)', [],
+                    facebookConnectPlugin.api('/' + response.authResponse.userID + '?fields=id,first_name,last_name,picture.type(large),friends', [],
                         (result) => {
                             let profile = {
                                 id: id,
@@ -182,11 +182,13 @@ export class UserService {
                                 last_name: result.last_name,
                                 picture: result.picture.data.url
                             }
+                            let friends = result.friends.data;
+                            this.storage.set('friends', friends);
                             resolve(profile);
                         },
                         (error) => {
                             let err = error;
-                            reject(JSON.stringify(err));
+                            reject(err);
                         });
                 }
                 else {
@@ -194,6 +196,16 @@ export class UserService {
                 }
             })
         })
+    }
+
+    public storeFriends(data){
+        let friends = [];
+        if(data.length > 0) {
+            data.forEach((f)=>{
+                friends.push(f.id);
+            })
+            this.storage.set('friends', friends);
+        }
     }
 
     public login() {

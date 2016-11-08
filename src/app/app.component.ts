@@ -62,8 +62,6 @@ export class MyApp {
             StatusBar.styleLightContent();
 
             let notificationReceivedCallback = (data) => {
-                console.log(JSON.stringify(data));
-                console.log('notificationReceivedCallback');
                 return;
                 // if (data.payload.additionalData) {
                 //     let d = data.payload.additionalData;
@@ -74,7 +72,6 @@ export class MyApp {
             }
 
             let notificationOpenedCallback = (data) => {
-                console.log(JSON.stringify(data));
                 let view = this.nav.getActive();
                 if (view.instance instanceof LoadingPage || view.instance instanceof LoginPage) {
                     this.notificationLoading(data);
