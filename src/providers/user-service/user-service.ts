@@ -36,7 +36,8 @@ export class UserService {
 
     constructor(private authHttp: AuthHttp, private http: Http, private alertCtrl: AlertController, private platform: Platform) {
         this.storage = new Storage();
-        this.getToken() ? this.setUser() : this.tokenFetch();
+        if (this.getToken()) this.setUser();
+        this.tokenFetch();
     }
 
 

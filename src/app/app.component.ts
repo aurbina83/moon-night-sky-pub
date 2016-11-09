@@ -62,13 +62,12 @@ export class MyApp {
             StatusBar.styleLightContent();
 
             let notificationReceivedCallback = (data) => {
-                return;
-                // if (data.payload.additionalData) {
-                //     let d = data.payload.additionalData;
-                //     if (d.type && d.type == "qrf" && data.isAppInFocus) {
-                //         this.alertQRF(data);
-                //     }
-                // } else return;
+                if (data.payload.additionalData) {
+                    let d = data.payload.additionalData;
+                    if (d.type && d.type == "qrf" && data.isAppInFocus) {
+                        this.alertQRF(data);
+                    }
+                } else return;
             }
 
             let notificationOpenedCallback = (data) => {
