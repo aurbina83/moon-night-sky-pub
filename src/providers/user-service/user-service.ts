@@ -4,6 +4,7 @@ import {AuthHttp} from 'angular2-jwt';
 import {JwtHelper} from 'angular2-jwt';
 import { tokenNotExpired } from 'angular2-jwt';
 import {AlertController, Platform} from 'ionic-angular';
+import {Geolocation} from 'ionic-native';
 import { Storage } from '@ionic/storage';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
@@ -28,15 +29,15 @@ export class UserService {
 
     // public profile = {
     //     id: 10153414012480684,
-    //     token: "EAAWf3JZBNDIoBAA6WghDE5Efi1ykjzk1EZBU3MHMIVKGZAc2F7H82gZCZBcPqICRoM4e5wHh3mPG4y6h11eSZCoUwF7KY5X8SGwX9yr8mqNf2r2z8hd9CvcUtPZChYEtc942IMKGfAdoStlVqSqMeFlxqe0mzr2UOb9cgoB01Ei2fhXt8uZAJSJrhGH3iVovZCGxgi5XDnQTUpX8bYeUOILF9q6oZAG3xdDDoZD",
+    //     token: "EAAWf3JZBNDIoBAOmZB30HsCWkcedUgKds2tqPQJT30ObZApeGyJvQvqhCtZAQZCfcm2vx91g7urfjo8XJhrT8FiZAVOYEJ83thGAH8JImB7L0CQQfc9O7KsNWLWm30jRdl3v8d3tIxL9W6CZA33YMzUouZBZBSLxhMfYQi9WZAaPAZAlucM7mN1Hk0IiWJ8JRE3cZAK29YsXF7aRFaKq2U4JIvfL",
     //     first_name: "Anthony",
     //     last_name: "Urbina",
     //     picture: "https://scontent.xx.fbcdn.net/v/t1.0-1/s200x200/14079793_10153693606430684_3078285146515445794_n.jpg?oh=b03a8c9230e81cd6618846dbc0cac31f&oe=583C28A0"
     // }
 
     constructor(private authHttp: AuthHttp, private http: Http, private alertCtrl: AlertController, private platform: Platform) {
-        this.storage = new Storage();
         if (this.getToken()) this.setUser();
+        this.storage = new Storage();
         this.tokenFetch();
     }
 
@@ -78,8 +79,8 @@ export class UserService {
     }
 
     public setUser() {
-        this.token = this.getToken();
-        let u = this.jwtHelper.decodeToken(this.token);
+        let token = this.getToken();
+        let u = this.jwtHelper.decodeToken(token);
         this.status._id = u._id;
         this.status.name = u.firstName + " " + u.lastName;
         this.status.imgUrl = u.imgUrl;
@@ -111,8 +112,7 @@ export class UserService {
     }
 
     public getToken() {
-        this.token = localStorage.getItem('id_token');
-        return this.token;
+        return localStorage.getItem('id_token');
     }
 
     public isAuth() {
@@ -155,6 +155,14 @@ export class UserService {
         })
     }
 
+    // public tokenAlt(){
+    //     let token;
+    //     this.storage.get('id_token').then((data)=>{
+    //         if(data) token = data;
+    //         if(!data) token = null;
+    //     })
+    //     return token;
+    // }
 
     fbLogin() {
         return new Promise((resolve, reject) => {
@@ -184,7 +192,7 @@ export class UserService {
                                 picture: result.picture.data.url
                             }
                             let friends = result.friends.data;
-                            this.storage.set('friends', friends);
+                            this.storeFriends(friends);
                             resolve(profile);
                         },
                         (error) => {
@@ -234,7 +242,7 @@ export class UserService {
     public checkLocation() {
         return new Promise((resolve, reject) => {
             let date = Date.now();
-            if (this.status.locStamp && this.status.locStamp < date && this.status.locStamp != undefined) {
+            if ((this.status.locStamp && this.status.locStamp < date) || (this.status._id && !this.status.locStamp)) {
                 this.getLocation();
                 resolve();
             } else {
@@ -245,6 +253,7 @@ export class UserService {
 
     public getLocation() {
         let success = (position) => {
+            console.log('success');
             let lat = position.coords.latitude;
             let lng = position.coords.longitude;
             let array = [lng, lat];
@@ -259,6 +268,7 @@ export class UserService {
         }
 
         let error = (err) => {
+            console.log('error');
             let alerts = this.alertCtrl.create({
                 title: "Location Unavailable",
                 subTitle: "If you have reception, make sure Veteran Connect has access to locations in your device settings",
@@ -271,6 +281,8 @@ export class UserService {
             timeout: 20000,
             enableHighAccuracy: true
         }
-        navigator.geolocation.getCurrentPosition(success, error, options);
+        this.platform.ready().then(()=>{
+            Geolocation.getCurrentPosition(options).then(position => success(position), err => error(err));
+        })
     }
 }

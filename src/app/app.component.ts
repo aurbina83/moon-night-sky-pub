@@ -1,6 +1,6 @@
 import {Component, ViewChild} from '@angular/core';
 import {Platform, MenuController, Nav, AlertController} from 'ionic-angular';
-import {StatusBar, NativeStorage} from 'ionic-native';
+import {StatusBar, NativeStorage, Diagnostic} from 'ionic-native';
 import {BrowsePage} from '../pages/browse/browse';
 import {CreatePage} from '../pages/create/create';
 import {EventsAttendingPage} from '../pages/events-attending/events-attending';
@@ -16,6 +16,7 @@ import {UserService} from '../providers/user-service/user-service';
 import {EventService} from '../providers/event-service/event-service';
 import {QrfService} from '../providers/qrf-service/qrf-service';
 import {WelcomePage} from '../pages/welcome/welcome';
+import {LocationPage} from '../pages/location-page/location-page';
 
 @Component({
     selector: 'app-menu',
@@ -54,9 +55,6 @@ export class MyApp {
 
     initializeApp() {
         this.platform.ready().then(() => {
-            if (this.status._id) {
-                this.UserService.checkLocation();
-            }
             // Okay, so the platform is ready and our plugins are available.
             // Here you can do any higher level native things you might need.
             StatusBar.styleLightContent();

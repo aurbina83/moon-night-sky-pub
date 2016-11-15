@@ -26,20 +26,17 @@ export class BrowsePage {
     public storage;
 
     constructor(private navCtrl: NavController, private EventService: EventService, private UserService: UserService, private modalCtrl: ModalController, private alertService: Alerts, private loadingCtrl: LoadingController, private alertCtrl: AlertController) {
+        this.status = UserService.status;
         this.storage = new Storage();
+        this.query.lng = this.status.loc[0];
+        this.query.lat = this.status.loc[1];
+    }
+
+    ionViewWillEnter(){
         this.storage.get("friends").then((data)=>{
-            if (data) {
-                data.forEach((d)=>{
-                    this.friends.push(d.id);
-                })
-            }
+            this.friends = data;
         });
-        UserService.checkLocation().then(() => {
-            this.status = UserService.status;
-            this.query.lng = this.status.loc[0];
-            this.query.lat = this.status.loc[1];
-            this.queryInit();
-        })
+        this.queryInit();
     }
 
     queryInit() {
@@ -67,7 +64,7 @@ export class BrowsePage {
         return new Promise((resolve, reject) => {
             this.EventService.getAll(this.query).then((data) => {
                 this.events = data;
-                if (this.events.length > 0) this.checkFriends(this.events);
+                if (this.events.length > 0 && this.friends && this.friends.length > 0) this.checkFriends(this.events);
                 this.query.skip += this.events.length;
                 resolve();
             }, (err) => {
@@ -78,13 +75,11 @@ export class BrowsePage {
     }
 
     public checkFriends(arr){
-        if (this.friends && this.friends.length > 0) {
-            arr.forEach((a)=>{
-                if (this.friends.indexOf(a.eventCreator.facebook.id) != -1) {
-                    a.friends = true;
-                }
-            })
-        } else return;
+        arr.forEach((a)=>{
+            if (this.friends.indexOf(a.eventCreator.facebook.id) != -1) {
+                a.friends = true;
+            }
+        })
     }
 
     infinite(infiniteScroll){

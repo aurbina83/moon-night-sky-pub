@@ -106,7 +106,7 @@ export class RegisterPage {
         if (this.user.branch == "Navy") {
             this.displayMos = "General & Service Rating Abbr.";
             this.max = 3;
-            this.pattern = /^[a-zA-Z]+$/;
+            this.pattern = /^[a-zA-Z0-9]+$/;
             this.patternMessage = "Max of 3 letters please. No rank or other identifiers please."
             this.user.branchImg = "images/navy.png"
         }

@@ -25,6 +25,7 @@ import { QrfListPage } from '../pages/qrf-list/qrf-list';
 import { RegisterPage } from '../pages/register/register';
 import { VerifyPage } from '../pages/verify/verify';
 import { WelcomePage } from '../pages/welcome/welcome';
+import { LocationPage } from '../pages/location-page/location-page';
 
 //Providers
 import { Alerts } from '../providers/alerts/alerts';
@@ -71,6 +72,7 @@ export function getAuthHttp(http) {
     RegisterPage,
     VerifyPage,
     WelcomePage,
+    LocationPage,
     Moment,
     MomentFromNow
   ],
@@ -100,7 +102,8 @@ export function getAuthHttp(http) {
     QrfListPage,
     RegisterPage,
     VerifyPage,
-    WelcomePage
+    WelcomePage,
+    LocationPage
   ],
   providers: [ Storage, Alerts, CommentService, ErrorService, EventService, QrfService, UserService, Validate, Yelp, AuthHttp, {
       provide: AuthHttp,

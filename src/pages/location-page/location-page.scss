@@ -1,0 +1,46 @@
+location-page {
+    .content-ios{
+        background: #262626;
+    }
+    .header{
+        margin-top: 10px;
+        color: #ececec;
+
+        h1{
+            color: white;
+            font-size: 4em;
+            margin-bottom: 20px;
+        }
+
+        h2{
+            margin-bottom: 20px;
+            padding: 0 15px;
+        }
+
+        h4{
+            padding: 0 15px;
+            color: salmon;
+        }
+        p{
+            padding: 0 15px;
+        }
+
+    }
+    .btn-group {
+        position: relative;
+        .btn {
+            position: absolute;
+            margin-top: 25px;
+            margin: 15px 0;
+            background: white;
+            color: #262626;
+            transition: all .3s ease-in-out;
+        }
+
+        .btn:active {
+            background: #262626;
+            color: white;
+        }
+    }
+
+}
