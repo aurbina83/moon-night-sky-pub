@@ -21,6 +21,7 @@ export class QrfChatPage {
     public socket;
     public status;
     public qrf;
+    public message;
     public messages;
     public qrfChat = { message: null, imgUrl: null, name: null, branch: null, datePosted: null };
     public zone;
@@ -36,7 +37,9 @@ export class QrfChatPage {
         qrfService.getOne(id).then((data) => {
             this.qrf = data;
             this.messages = data['messages'];
-        }, (err) =>{
+            console.log(this.messages);
+            console.log(this.qrf);
+        }, (err) => {
             this.alerts.toast(err.message, "toastError");
         });
         /////qrfChat template
@@ -67,17 +70,20 @@ export class QrfChatPage {
 
     public createComment() {
         this.qrfService.chat(this.qrf._id, this.qrfChat);
-        this.qrfChat.message = "";
     }
 
-    public socketM(){
-        this.qrfChat.datePosted = new Date();
-        let message = {
-            event: this.qrf._id,
-            chat: this.qrfChat
-        }
-        this.socket.emit('message', message);
-        this.createComment();
+    public socketM() {
+        if (this.message != "") {
+            this.qrfChat.message = this.message;
+            this.qrfChat.datePosted = new Date();
+            let message = {
+                event: this.qrf._id,
+                chat: this.qrfChat
+            }
+            this.socket.emit('message', message);
+            this.createComment();
+            this.message = "";
+        } else return;
     }
 
 }

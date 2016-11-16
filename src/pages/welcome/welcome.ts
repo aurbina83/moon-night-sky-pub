@@ -10,8 +10,9 @@ import { LocationPage } from '../location-page/location-page';
 import { EventDetailsPage } from '../event-details/event-details';
 import { UserService } from '../../providers/user-service/user-service';
 import { EventService } from '../../providers/event-service/event-service';
+import { QrfService} from '../../providers/qrf-service/qrf-service';
 import { Alerts } from '../../providers/alerts/alerts';
-import { NativeStorage, Diagnostic } from 'ionic-native';
+import { NativeStorage, Diagnostic, InAppBrowser } from 'ionic-native';
 /*
   Generated class for the WelcomePage page.
 
@@ -26,7 +27,7 @@ export class WelcomePage {
     public status;
 
 
-    constructor(private navCtrl: NavController, private menu: MenuController, private UserService: UserService, private EventService: EventService, private alertService: Alerts, private loadingCtrl: LoadingController, private actionCtrl: ActionSheetController, private platform: Platform) {
+    constructor(private navCtrl: NavController, private menu: MenuController, private UserService: UserService, private QrfService: QrfService, private EventService: EventService, private alertService: Alerts, private loadingCtrl: LoadingController, private actionCtrl: ActionSheetController, private platform: Platform) {
         this.status = UserService.status;
     }
 
@@ -47,9 +48,7 @@ export class WelcomePage {
 
     locationCheck(){
         Diagnostic.getLocationAuthorizationStatus().then(status =>{
-            if(status == "denied") this.navCtrl.push(LocationPage);
-            // if(status == "denied") console.log(status);
-            else return;
+            if(status == "denied" || status == "not_requested" || status == "DENIED" || status == "NOT_REQUESTED") this.navCtrl.push(LocationPage);
         }).catch(e => console.log(e));
     }
 
@@ -70,10 +69,20 @@ export class WelcomePage {
     // }
 
     notificationCheck(data) {
-        if (data.additionalData) {
+        if (data.notification.payload.additionalData) {
             let d = data.notification.payload.additionalData;
             if (d.type && d.type == "deleted") this.navCtrl.push(BrowsePage);
-            if (d.type && d.type == "qrf") this.navCtrl.push(QrfAcceptPage, { qrf: d.qrfObj });
+            if(d.type && d.type == "web") {
+                let browser = new InAppBrowser(d.url, '_system');
+                browser.show();
+            }
+            if (d.type && d.type == "qrf") {
+                this.QrfService.getOne(d.id).then((data) => {
+                    this.navCtrl.push(QrfAcceptPage, { qrf: data });
+                }, (err) => {
+                    console.log(err.message);
+                })
+            }
             if (d.type && d.type == "qrfChat") this.navCtrl.push(QrfChatPage, { _id: d.id });
             if (d.type && d.type == "event") {
                 this.EventService.getOne(d.id).then((data) => {
@@ -82,7 +91,7 @@ export class WelcomePage {
                     console.log(err.message);
                 })
             }
-        } else return;
+        }
         NativeStorage.remove('notification');
     }
 

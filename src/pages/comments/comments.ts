@@ -19,6 +19,7 @@ export class CommentsPage {
     public status;
     public event;
     public comments;
+    public message;
     public comment = { message: null, event: null };
     public zone;
     constructor(private navCtrl: NavController,
@@ -69,25 +70,30 @@ export class CommentsPage {
     }
     public createComment() {
         this.comment.event = this.event._id;
-        this.CommentService.create(this.comment);
-        this.comment.message = "";
+        this.CommentService.create(this.comment).then(()=>{
+            this.comment.message = "";
+        });
     }
 
     public socketM() {
-        let name = this.status.name.split(' ');
-        let date = new Date();
-        let message = {
-            event: this.event._id,
-            message: this.comment.message,
-            user: {
-                firstName: name[0],
-                lastName: name[1],
-                imgUrl: this.status.imgUrl
-            },
-            datePosted: date
+        if(this.comment.message != "") {
+            this.comment.message = this.message;
+            let name = this.status.name.split(' ');
+            let date = new Date();
+            let message = {
+                event: this.event._id,
+                message: this.comment.message,
+                user: {
+                    firstName: name[0],
+                    lastName: name[1],
+                    imgUrl: this.status.imgUrl
+                },
+                datePosted: date
+            }
+            this.socket.emit('message', message);
+            this.createComment();
+            this.message = "";
         }
-        this.socket.emit('message', message);
-        this.createComment();
     }
 
 }

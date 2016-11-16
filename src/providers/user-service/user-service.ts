@@ -253,7 +253,6 @@ export class UserService {
 
     public getLocation() {
         let success = (position) => {
-            console.log('success');
             let lat = position.coords.latitude;
             let lng = position.coords.longitude;
             let array = [lng, lat];
@@ -268,7 +267,6 @@ export class UserService {
         }
 
         let error = (err) => {
-            console.log('error');
             let alerts = this.alertCtrl.create({
                 title: "Location Unavailable",
                 subTitle: "If you have reception, make sure Veteran Connect has access to locations in your device settings",

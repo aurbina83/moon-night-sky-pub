@@ -1,6 +1,6 @@
 import {Component, ViewChild} from '@angular/core';
 import {Platform, MenuController, Nav, AlertController} from 'ionic-angular';
-import {StatusBar, NativeStorage, Diagnostic} from 'ionic-native';
+import {StatusBar, NativeStorage, InAppBrowser} from 'ionic-native';
 import {BrowsePage} from '../pages/browse/browse';
 import {CreatePage} from '../pages/create/create';
 import {EventsAttendingPage} from '../pages/events-attending/events-attending';
@@ -16,7 +16,6 @@ import {UserService} from '../providers/user-service/user-service';
 import {EventService} from '../providers/event-service/event-service';
 import {QrfService} from '../providers/qrf-service/qrf-service';
 import {WelcomePage} from '../pages/welcome/welcome';
-import {LocationPage} from '../pages/location-page/location-page';
 
 @Component({
     selector: 'app-menu',
@@ -76,6 +75,10 @@ export class MyApp {
                 else if (data.notification.payload.additionalData) {
 
                     let d = data.notification.payload.additionalData;
+                    if(d.type && d.type == "web") {
+                        let browser = new InAppBrowser(d.url, '_system');
+                        browser.show();
+                    }
                     if (d.type && d.type == "deleted") this.nav.push(BrowsePage);
                     if (d.type && d.type == "qrf") {
                         this.QrfService.getOne(d.id).then((data) => {
@@ -96,7 +99,7 @@ export class MyApp {
             }
 
             let iosSettings = {};
-            iosSettings['kOSSettingsKeyAutoPrompt'] = false;
+            iosSettings['kOSSettingsKeyAutoPrompt'] = true;
             iosSettings['kOSSettingsKeyInAppLaunchUrl'] = false;
 
             window['plugins'].OneSignal

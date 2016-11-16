@@ -83,7 +83,7 @@ export class LocationPage {
 
   test(){
       Diagnostic.getLocationAuthorizationStatus().then(status => {
-          if (status != "denied"){
+          if (status != "denied" || status != "not_requested" || status != "DENIED" || status == "NOT_REQUESTED"){
               this.permission = true;
               this.navCtrl.setRoot(WelcomePage);
           }else {
