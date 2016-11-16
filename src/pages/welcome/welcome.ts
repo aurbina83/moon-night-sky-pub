@@ -143,18 +143,4 @@ export class WelcomePage {
     //         return;
     //     })
     // }
-
-    share() {
-        if (this.platform.is('ios')) {
-            window['plugins'].socialsharing.shareVia('com.apple.social.facebook', 'Message via FB', null, null, 'https://veteranconnect.co', function() { console.log('share ok') }, function(msg) {
-                window['plugins'].socialsharing.shareViaFacebook('Message via Facebook', null, 'https://veteranconnect.co', function() { console.log('share ok') }, function(errormsg) { console.log(errormsg) });
-            })
-        }
-        if (this.platform.is('android')) {
-            window['plugins'].socialsharing.shareVia('facebook', 'Message via FB', null, null, 'https://veteranconnect.co', function() { console.log('share ok') }, function(msg) {
-                window['plugins'].socialsharing.shareViaFacebook('Message via Facebook', null, 'https://veteranconnect.co', function() { console.log('share ok') }, function(errormsg) { console.log(errormsg) });
-            })
-        }
-    }
-
 }

@@ -163,4 +163,17 @@ export class MyApp {
         // navigate to the new page if it is not the current page
         this.nav.setRoot(page.component);
     }
+
+    share() {
+        if (this.platform.is('ios')) {
+            window['plugins'].socialsharing.shareVia('com.apple.social.facebook', null, null, null, 'https://veteranconnect.co', function() { console.log('share ok') }, function(msg) {
+                window['plugins'].socialsharing.shareViaFacebook(null, null, 'https://veteranconnect.co', function() { console.log('share ok') }, function(errormsg) { console.log(errormsg) });
+            })
+        }
+        if (this.platform.is('android')) {
+            window['plugins'].socialsharing.shareVia('facebook', null, null, null, 'https://veteranconnect.co', function() { console.log('share ok') }, function(msg) {
+                window['plugins'].socialsharing.shareViaFacebook(null, null, 'https://veteranconnect.co', function() { console.log('share ok') }, function(errormsg) { console.log(errormsg) });
+            })
+        }
+    }
 }

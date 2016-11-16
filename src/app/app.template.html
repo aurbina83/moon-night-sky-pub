@@ -1,19 +1,24 @@
 <ion-menu [content]="content" id="menu1">
 
-    <ion-content class="sidemen">
-        <ion-toolbar color="dblue" (click)="welcome()" tappable>
+
+    <ion-header>
+        <ion-toolbar color="dblue" (click)="welcome()" class="tool" tappable>
             <h2 class="toolbar-item brand">Veteran Connect</h2>
         </ion-toolbar>
-        
-        <ion-item class="toolbar-item profile" no-lines (click)="welcome()" tappable>
+    </ion-header>
+    <ion-content class="sidemen">
+        <ion-item class="profile" no-lines (click)="welcome()" tappable>
             <!-- <ion-avatar item-left> -->
             <img item-left src="{{status.imgUrl}}" alt="">
             <!-- </ion-avatar> -->
             <h3>{{status.name}}</h3>
         </ion-item>
         <ion-list no-lines class="list">
-            <ion-item *ngFor="let p of pages" (click)="openPage(p)" class=" sidemen animated menitem slideInUp" tappable>
+            <ion-item *ngFor="let p of pages" (click)="openPage(p)" class="animated menitem slideInUp" tappable>
                 <ion-icon name="{{p.icon}}" large></ion-icon> {{p.title}}
+            </ion-item>
+            <ion-item (click)="share()" class="animated menitem slideInUp" tappable>
+                <ion-icon name="logo-facebook" large></ion-icon> Share
             </ion-item>
             <ion-item (click)="logout()" class="foot" tappable no-lines>
                 <ion-icon name="log-out" large></ion-icon> Log Out

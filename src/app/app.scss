@@ -45,15 +45,26 @@
 
 app-menu {
     $SIDEMENU_TRANSPARENCY: rgba(255,255,255,0.4);
-    .toolbar-item {
-        background-color: #053c5e;
-        color: white;
-        font-family: "Open Sans", sans-serif;
-        ion-title {
-            font-family: "Montserrat";
+    // .toolbar{
+    //     border: 0px solid rgba(0,0,0,0);
+    //     box-shadow: 0px 2px 2px -1px rgba(0,0,0,0.5);
+    // }
+    .tool{
+        .brand {
+            font-size: 20px !important;
             text-align: center;
         }
+        .toolbar-item {
+            background-color: #053c5e;
+            color: white;
+            font-family: "Open Sans", sans-serif;
+            ion-title {
+                font-family: "Montserrat";
+                text-align: center;
+            }
+        }
     }
+
 
     .foot {
         background-color: #A31621;
@@ -64,11 +75,6 @@ app-menu {
         }
     }
 
-
-    .brand {
-        font-size: 20px !important;
-        text-align: center;
-    }
     .sidemen {
         /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#053c5e+0,37718e+100 */
         background: #053c5e;
@@ -88,7 +94,9 @@ app-menu {
         }
 
         .profile {
-            border-bottom: 2px solid $SIDEMENU_TRANSPARENCY !important;
+            background-color: #053c5e;
+            color: white;
+            border-top: 1px solid rgba(255,255,255,0.2) !important;
             h3{
                 font-size: 15px;
                 text-transform: uppercase;
@@ -100,10 +108,12 @@ app-menu {
                 height: auto;
             }
         }
+
         .menitem {
             cursor: pointer;
             color: white;
-            padding-top: 5px !important;
+            background: rgba(0,0,0,0);
+            // padding-top: 5px !important;
             // border-top: 1px solid $SIDEMENU_TRANSPARENCY !important;
             border-bottom: 1px solid $SIDEMENU_TRANSPARENCY !important;
             &:active {

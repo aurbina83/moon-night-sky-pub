@@ -70,9 +70,7 @@ export class CommentsPage {
     }
     public createComment() {
         this.comment.event = this.event._id;
-        this.CommentService.create(this.comment).then(()=>{
-            this.comment.message = "";
-        });
+        this.CommentService.create(this.comment);
     }
 
     public socketM() {
@@ -93,7 +91,7 @@ export class CommentsPage {
             this.socket.emit('message', message);
             this.createComment();
             this.message = "";
-        }
+        } else return;
     }
 
 }
