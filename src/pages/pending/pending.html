@@ -16,12 +16,12 @@
 <ion-content class="pending" padding>
     <div class="content">
         <h4>Your military service is not yet verified!</h4>
-        <p>We're checking against a DoD database which <em>(surprise surprise)</em> can go down at times, causing a false negative.
+        <h6>We're checking against a DoD database which <em>(surprise surprise)</em> can go down at times, causing a false negative.
         <br><br>
         Rest assured, we'll get you squared away fast.
-        </p>
+        </h6>
         <h6 color="dred">Please email an image of one of the following</h6>
-        <p class="accept">Acceptable Documents:</p>
+        <h6 class="accept">Acceptable Documents:</h6>
         <ul class="accept">
             <li>DD-214</li>
             <li>Military ID</li>
@@ -31,16 +31,18 @@
             <li>G.I. Bill Documents</li>
             <li>Promotion/Award Certificate</li>
         </ul>
-        <p class="deny">Do not submit:</p>
+        <h6 class="deny">Do not submit:</h6>
         <ul class="deny">
             <li>Pictures of you in uniform</li>
             <li>Documents not mentioned above</li>
         </ul>
-        <p>When we verify your account, we check our database for the name provided by your facebook account. If your name spelled differently than what is in  your documents, make sure you let us know in the email. This is the name we have for you.</p>
-        <p><strong>Name: {{status.name}}</strong></p>
-        <p><strong>Every document is inspected. These can be pictures taken with your phone. You do not need to scan documents, as long as your <em>name is legible</em>. <br><br> Documents are destroyed when a decision is made on your application. Applications are processed in the order they are received. During EST daylight hours you will usually receive a response within 1 hour. Ensure your document is legible before emailing</strong>.</p>
+        <h6>If your account name is different than what is in your documents you must include either your State ID or another acceptable document from the list. Make sure you let us know your account name in the email. This is the name we have for you.</h6>
+        <h6><strong>Name: {{status.name}}</strong></h6>
+        <h6>These can be pictures taken with your phone. Make sure your <em>name is legible</em>. <br><br> ALL DOCUMENTS ARE DESTROYED. <br />
+            All requests will usually receive a response within 1 hour. Ensure your document is legible before emailing.</h6>
 
-        <p>Email your documents to <strong><a href="mailto:verify@veteranconnect.co">verify@veteranconnect.co</a></strong></p>
+        <h6>Send documents to <a href="mailto:verify@veteranconnect.co">verify@veteranconnect.co</a></h6>
     </div>
-    <button ion-button block color="dblue" (click)="click()">Log Out</button>
+    <a href="mailto:verify@veteranconnect.co"><button ion-button block color="warn">EMAIL DOCUMENTS</button></a>
+    <button ion-button block color="dblue" (click)="click()">LOG OUT</button>
 </ion-content>

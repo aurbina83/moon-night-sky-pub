@@ -155,15 +155,6 @@ export class UserService {
         })
     }
 
-    // public tokenAlt(){
-    //     let token;
-    //     this.storage.get('id_token').then((data)=>{
-    //         if(data) token = data;
-    //         if(!data) token = null;
-    //     })
-    //     return token;
-    // }
-
     fbLogin() {
         return new Promise((resolve, reject) => {
             facebookConnectPlugin.logout();
@@ -210,29 +201,24 @@ export class UserService {
     public storeFriends(data){
         let friends = [];
         if(data.length > 0) {
-            data.forEach((f)=>{
-                friends.push(f.id);
-            })
+            friends = data.map(f => {
+                return f.id;
+            });
             this.storage.set('friends', friends);
         }
     }
 
     public login() {
         return new Promise((resolve, reject) => {
-            this.fbLogin().then(() => {
-                this.fbStatus().then((res) => {
-                    this.loginHTTP(res).then(() => {
-                        resolve("OK");
-                    }, (err) => {
-                        reject(err.message);
-                    });
-                }, (err) => {
-                    reject(err);
-                })
-            }, (err) => {
-                reject(err);
+            this.fbLogin()
+            .then(() => this.fbStatus())
+            .then(res => this.loginHTTP(res))
+            .then(() => resolve('OK'))
+            .catch(err => {
+                if (err.message) reject(err.message);
+                else reject(err);
             })
-        })
+        });
     }
 
     ////////////////////////////////////////////////

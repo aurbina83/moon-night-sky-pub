@@ -8,7 +8,7 @@
 
         .content{
             h6 {
-                font-weight: light !important;
+                font-weight: 400 !important;
             }
 
             .accept{
@@ -17,6 +17,10 @@
             .deny{
                 color: red;
             }
+        }
+
+        a{
+            text-decoration: none;
         }
 
         button {

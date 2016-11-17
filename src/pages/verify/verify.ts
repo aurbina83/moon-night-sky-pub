@@ -35,9 +35,11 @@ export class VerifyPage {
     }
 
     public confirm(){
+        let date = moment(this.date).format("MM/DD/YY");
+        let dob = moment(this.dob).format("MM/DD/YYYY");
         let alert = this.alertCtrl.create({
             title: 'Confirm your information',
-            message: `Last Name: ${this.name}, DOB: ${this.dob}, Service Date: ${this.date}`,
+            message: `Last Name: ${this.name}, DOB: ${dob}, Service Date: ${date}`,
             buttons:[
                 {
                     text: "Cancel",
