@@ -27,14 +27,6 @@ export class UserService {
     public LOGIN_URL: string = "https://app.veteranconnect.co/api/v1/users";
     public jwtHelper: JwtHelper = new JwtHelper();
 
-    // public profile = {
-    //     id: 10153414012480684,
-    //     token: "EAAWf3JZBNDIoBAOmZB30HsCWkcedUgKds2tqPQJT30ObZApeGyJvQvqhCtZAQZCfcm2vx91g7urfjo8XJhrT8FiZAVOYEJ83thGAH8JImB7L0CQQfc9O7KsNWLWm30jRdl3v8d3tIxL9W6CZA33YMzUouZBZBSLxhMfYQi9WZAaPAZAlucM7mN1Hk0IiWJ8JRE3cZAK29YsXF7aRFaKq2U4JIvfL",
-    //     first_name: "Anthony",
-    //     last_name: "Urbina",
-    //     picture: "https://scontent.xx.fbcdn.net/v/t1.0-1/s200x200/14079793_10153693606430684_3078285146515445794_n.jpg?oh=b03a8c9230e81cd6618846dbc0cac31f&oe=583C28A0"
-    // }
-
     constructor(private authHttp: AuthHttp, private http: Http, private alertCtrl: AlertController, private platform: Platform) {
         if (this.getToken()) this.setUser();
         this.storage = new Storage();
