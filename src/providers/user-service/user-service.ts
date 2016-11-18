@@ -4,7 +4,7 @@ import {AuthHttp} from 'angular2-jwt';
 import {JwtHelper} from 'angular2-jwt';
 import { tokenNotExpired } from 'angular2-jwt';
 import {AlertController, Platform} from 'ionic-angular';
-import {Geolocation} from 'ionic-native';
+import {Geolocation, AppVersion} from 'ionic-native';
 import { Storage } from '@ionic/storage';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
@@ -150,7 +150,7 @@ export class UserService {
     fbLogin() {
         return new Promise((resolve, reject) => {
             facebookConnectPlugin.logout();
-            facebookConnectPlugin.login(['public_profile', 'user_friends'], (response) => {
+            facebookConnectPlugin.login(['public_profile', 'user_friends', 'email'], (response) => {
                 resolve();
             }, (error) => {
                 let err = error;
@@ -165,18 +165,41 @@ export class UserService {
                 if (response.status == "connected") {
                     let id = response.authResponse.userID;
                     let token = response.authResponse.accessToken;
-                    facebookConnectPlugin.api('/' + response.authResponse.userID + '?fields=id,first_name,last_name,picture.type(large),friends', [],
+                    facebookConnectPlugin.api('/' + response.authResponse.userID + '?fields=id,first_name,last_name,picture.type(large),friends,email', [],
                         (result) => {
-                            let profile = {
-                                id: id,
-                                token: token,
-                                first_name: result.first_name,
-                                last_name: result.last_name,
-                                picture: result.picture.data.url
-                            }
-                            let friends = result.friends.data;
-                            this.storeFriends(friends);
-                            resolve(profile);
+                            let version;
+                            AppVersion.getVersionNumber().then(data => {
+                                version = data;
+                                let profile = {
+                                    id: id,
+                                    token: token,
+                                    first_name: result.first_name,
+                                    last_name: result.last_name,
+                                    picture: result.picture.data.url,
+                                    email: result.email,
+                                    platform: this.platform.is('ios') ? 'ios' : 'android',
+                                    appVersion: version
+                                }
+                                console.log(profile);
+                                let friends = result.friends.data;
+                                this.storeFriends(friends);
+                                resolve(profile);
+                            }, err => {
+                                let profile = {
+                                    id: id,
+                                    token: token,
+                                    first_name: result.first_name,
+                                    last_name: result.last_name,
+                                    picture: result.picture.data.url,
+                                    email: result.email,
+                                    platform: this.platform.is('ios') ? 'ios' : 'android',
+                                    appVersion: version
+                                }
+                                console.log(profile);
+                                let friends = result.friends.data;
+                                this.storeFriends(friends);
+                                resolve(profile);
+                            });
                         },
                         (error) => {
                             let err = error;

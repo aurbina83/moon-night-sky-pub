@@ -165,6 +165,7 @@ export class MyApp {
     }
 
     share() {
+        this.menu.close();
         if (this.platform.is('ios')) {
             window['plugins'].socialsharing.shareVia('com.apple.social.facebook', null, null, null, 'https://veteranconnect.co', function() { console.log('share ok') }, function(msg) {
                 window['plugins'].socialsharing.shareViaFacebook(null, null, 'https://veteranconnect.co', function() { console.log('share ok') }, function(errormsg) { console.log(errormsg) });

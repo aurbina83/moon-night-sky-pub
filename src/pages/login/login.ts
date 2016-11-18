@@ -39,10 +39,12 @@ export class LoginPage {
         loading.present();
         this.UserService.login().then((res) => {
             loading.dismiss().then(()=>{
-                this.status = this.UserService.status;
-                if(!this.status.branch) this.navCtrl.setRoot(RegisterPage);
-                if(this.status.branch && !this.status.verified) this.navCtrl.setRoot(PendingPage);
-                if(this.status.branch && this.status.verified) this.navCtrl.setRoot(WelcomePage);
+                setTimeout(() =>{
+                    this.status = this.UserService.status;
+                    if(!this.status.branch) this.navCtrl.setRoot(RegisterPage);
+                    if(this.status.branch && !this.status.verified) this.navCtrl.setRoot(PendingPage);
+                    if(this.status.branch && this.status.verified) this.navCtrl.setRoot(WelcomePage);
+                }, 500);
             });
         }, (err) => {
             loading.dismiss().then(() => {

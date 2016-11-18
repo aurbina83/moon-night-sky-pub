@@ -14,16 +14,10 @@
 
 
 <ion-content padding class="register">
-    <ion-list no-lines>
+    <ion-list>
         <form (submit)="onSubmit()">
             <ion-item>
-                <ion-label stacked>Email</ion-label>
-                <ion-input type="email" name="email" required (input)="validateEmail()" (click)="touch('email')" [(ngModel)]="user.email" ></ion-input>
-            </ion-item>
-            <p *ngIf="!user.email && emailTouch" color="danger" padding-left>*Required</p>
-            <p *ngIf="!emailCheck" color="danger" padding-left>Invalid Email Address</p>
-            <ion-item>
-                <ion-label stacked>Branch</ion-label>
+                <ion-label floating>Branch</ion-label>
                 <ion-select (ionChange)="setMos()" name="branch" [(ngModel)]="user.branch">
                     <ion-option value="Army" selected="true">Army</ion-option>
                     <ion-option value="Marines">Marines</ion-option>
@@ -32,12 +26,12 @@
                 </ion-select>
             </ion-item>
             <ion-item>
-                <ion-label stacked>{{displayMos}}</ion-label>
-                <ion-input type="text" name="mos" required [(ngModel)]="user.mos" (click)="touch('mos')" (input)="validateMos()"></ion-input>
+                <ion-label floating>{{displayMos}}</ion-label>
+                <ion-input type="text" name="mos" required [(ngModel)]="user.mos" (input)="validateMos()"></ion-input>
              </ion-item>
              <p *ngIf="!user.mos && mosTouch" color="danger" padding-left>*Required</p>
              <p *ngIf="!mosCheck" color="danger" padding-left> {{patternMessage}}</p>
-            <button ion-button [disabled]="(!emailCheck || !user.email) || (!mosCheck || !user.mos)" type="submit" block color="lred">Submit</button>
+            <button ion-button [disabled]="!mosCheck || !user.mos" type="submit" block color="dred">SUBMIT</button>
         </form>
     </ion-list>
 </ion-content>

@@ -21,18 +21,15 @@ export class RegisterPage {
     public status;
 
     displayMos: string = "MOS";
-    max: number;
+    maxNum: number;
     pattern: any;
     user = {
-        email: null,
         branch: null,
         mos: null,
         branchImg: null
     }
     patternMessage;
-    emailCheck = true;
     mosCheck = true;
-    emailTouch;
     mosTouch;
 
     constructor(private navCtrl: NavController, private menu: MenuController, private validator: Validate,
@@ -47,9 +44,7 @@ export class RegisterPage {
 
     onSubmit() {
         let loader = this.loadingCtrl.create({});
-
         loader.present();
-        this.user.email = this.user.email.toLowerCase().trim();
         this.user.mos = this.user.mos.toUpperCase();
         this.UserService.updateUser('register', this.status._id, this.user).then(() => {
             loader.dismiss();
@@ -60,12 +55,8 @@ export class RegisterPage {
         })
     }
 
-    validateEmail() {
-        this.emailCheck = this.validator.validate(this.user.email);
-    }
-
     validateMos() {
-        this.mosCheck = this.validator.validateMos(this.user.mos, this.pattern, this.max)
+        this.mosCheck = this.validator.validateMos(this.user.mos, this.pattern, this.maxNum)
     }
 
     ionViewDidEnter() {
@@ -74,38 +65,33 @@ export class RegisterPage {
 
     ionViewWillLeave() {
       this.menu.swipeEnable(true, 'menu1');
-    }
-
-    touch(value) {
-        if (value == "email") this.emailTouch = true;
-        if (value == "mos") this.mosTouch = true;
-    }
+  }
 
     public setMos() {
         if (this.user.branch == "Army") {
             this.displayMos = "MOS";
-            this.max = 3;
+            this.maxNum = 3;
             this.pattern = /^[a-zA-Z0-9]+$/;
             this.patternMessage = "Two numbers and one letter only. No AKIs or SQIs"
             this.user.branchImg = "images/army.png"
         }
         if (this.user.branch == "Marines") {
             this.displayMos = "MOS";
-            this.max = 4;
+            this.maxNum = 4;
             this.pattern = /^[0-9]+$/;
             this.patternMessage = "Four numbers only. No other identifiers please."
             this.user.branchImg = "images/marines.png"
         }
         if (this.user.branch == "Air Force") {
             this.displayMos = "AFSC";
-            this.max = 5;
+            this.maxNum = 5;
             this.pattern = /^[a-zA-Z0-9]+$/;
             this.patternMessage = "Numbers and letters only"
             this.user.branchImg = "images/airforce.png"
         }
         if (this.user.branch == "Navy") {
             this.displayMos = "General & Service Rating Abbr.";
-            this.max = 3;
+            this.maxNum = 3;
             this.pattern = /^[a-zA-Z0-9]+$/;
             this.patternMessage = "Max of 3 letters and numbers. No rank or other identifiers please."
             this.user.branchImg = "images/navy.png"
