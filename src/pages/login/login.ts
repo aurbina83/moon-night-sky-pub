@@ -38,13 +38,11 @@ export class LoginPage {
         });
         loading.present();
         this.UserService.login().then((res) => {
+            this.status = res;
             loading.dismiss().then(()=>{
-                setTimeout(() =>{
-                    this.status = this.UserService.status;
-                    if(!this.status.branch) this.navCtrl.setRoot(RegisterPage);
-                    if(this.status.branch && !this.status.verified) this.navCtrl.setRoot(PendingPage);
-                    if(this.status.branch && this.status.verified) this.navCtrl.setRoot(WelcomePage);
-                }, 500);
+                if(!this.status.branch) this.navCtrl.setRoot(RegisterPage);
+                if(this.status.branch && !this.status.verified) this.navCtrl.setRoot(PendingPage);
+                if(this.status.branch && this.status.verified) this.navCtrl.setRoot(WelcomePage);
             });
         }, (err) => {
             loading.dismiss().then(() => {

@@ -70,8 +70,9 @@ export class UserService {
         })
     }
 
-    public setUser() {
-        let token = this.getToken();
+    public setUser(userToken?) {
+        let token;
+        userToken ? token = userToken : token = this.getToken();
         let u = this.jwtHelper.decodeToken(token);
         this.status._id = u._id;
         this.status.name = u.firstName + " " + u.lastName;
@@ -82,6 +83,7 @@ export class UserService {
             this.status.loc = u.loc;
             this.status.locStamp = u.locStamp;
         }
+        return this.status;
     }
 
     public tokenFetch(){
@@ -139,7 +141,7 @@ export class UserService {
                 .subscribe(
                 data => {
                     this.setToken(data.token);
-                    resolve("OK");
+                    resolve(this.setUser(data.token));
                 },
                 err => {
                     reject(err.json());
@@ -151,7 +153,46 @@ export class UserService {
         return new Promise((resolve, reject) => {
             facebookConnectPlugin.logout();
             facebookConnectPlugin.login(['public_profile', 'user_friends', 'email'], (response) => {
-                resolve();
+                let id = response.authResponse.userID;
+                let token = response.authResponse.accessToken;
+                facebookConnectPlugin.api('/' + response.authResponse.userID + '?fields=id,first_name,last_name,picture.type(large),friends,email', [],
+                    (result) => {
+                        let version;
+                        AppVersion.getVersionNumber().then(data => {
+                            version = data;
+                            let profile = {
+                                id: id,
+                                token: token,
+                                first_name: result.first_name,
+                                last_name: result.last_name,
+                                picture: result.picture.data.url,
+                                email: result.email,
+                                platform: this.platform.is('ios') ? 'ios' : 'android',
+                                appVersion: version
+                            }
+                            let friends = result.friends.data;
+                            this.storeFriends(friends);
+                            resolve(profile);
+                        }, err => {
+                            let profile = {
+                                id: id,
+                                token: token,
+                                first_name: result.first_name,
+                                last_name: result.last_name,
+                                picture: result.picture.data.url,
+                                email: result.email,
+                                platform: this.platform.is('ios') ? 'ios' : 'android',
+                                appVersion: version
+                            }
+                            let friends = result.friends.data;
+                            this.storeFriends(friends);
+                            resolve(profile);
+                        });
+                    },
+                    (error) => {
+                        let err = error;
+                        reject(err);
+                    });
             }, (error) => {
                 let err = error;
                 reject(err);
@@ -159,59 +200,6 @@ export class UserService {
         })
     }
 
-    fbStatus() {
-        return new Promise((resolve, reject) => {
-            facebookConnectPlugin.getLoginStatus((response) => {
-                if (response.status == "connected") {
-                    let id = response.authResponse.userID;
-                    let token = response.authResponse.accessToken;
-                    facebookConnectPlugin.api('/' + response.authResponse.userID + '?fields=id,first_name,last_name,picture.type(large),friends,email', [],
-                        (result) => {
-                            let version;
-                            AppVersion.getVersionNumber().then(data => {
-                                version = data;
-                                let profile = {
-                                    id: id,
-                                    token: token,
-                                    first_name: result.first_name,
-                                    last_name: result.last_name,
-                                    picture: result.picture.data.url,
-                                    email: result.email,
-                                    platform: this.platform.is('ios') ? 'ios' : 'android',
-                                    appVersion: version
-                                }
-                                console.log(profile);
-                                let friends = result.friends.data;
-                                this.storeFriends(friends);
-                                resolve(profile);
-                            }, err => {
-                                let profile = {
-                                    id: id,
-                                    token: token,
-                                    first_name: result.first_name,
-                                    last_name: result.last_name,
-                                    picture: result.picture.data.url,
-                                    email: result.email,
-                                    platform: this.platform.is('ios') ? 'ios' : 'android',
-                                    appVersion: version
-                                }
-                                console.log(profile);
-                                let friends = result.friends.data;
-                                this.storeFriends(friends);
-                                resolve(profile);
-                            });
-                        },
-                        (error) => {
-                            let err = error;
-                            reject(err);
-                        });
-                }
-                else {
-                    reject('Not logged in');
-                }
-            })
-        })
-    }
 
     public storeFriends(data){
         let friends = [];
@@ -226,9 +214,8 @@ export class UserService {
     public login() {
         return new Promise((resolve, reject) => {
             this.fbLogin()
-            .then(() => this.fbStatus())
             .then(res => this.loginHTTP(res))
-            .then(() => resolve('OK'))
+            .then((res) => resolve(res))
             .catch(err => {
                 if (err.message) reject(err.message);
                 else reject(err);
