@@ -32,8 +32,8 @@ export class BrowsePage {
         this.query.lat = this.status.loc[1];
     }
 
-    ionViewWillEnter(){
-        this.storage.get("friends").then((data)=>{
+    ionViewWillEnter() {
+        this.storage.get("friends").then((data) => {
             this.friends = data;
         });
         this.queryInit();
@@ -42,20 +42,20 @@ export class BrowsePage {
     queryInit() {
         this.query.skip = 0;
         this.query.maxDist = 25;
-          let load = this.loadingCtrl.create({});
-          load.present();
+        let load = this.loadingCtrl.create({});
+        load.present();
         this.getAll().then(() => {
-               load.dismiss().then(() => {
-                   if (this.events.length < 1) {
-                       this.noEventAlert();
-                   }
-               })
+            load.dismiss().then(() => {
+                if (this.events.length < 1) {
+                    this.noEventAlert();
+                }
+            })
         }, err => {
             load.dismiss();
         });
     }
 
-    radiusAdjust(){
+    radiusAdjust() {
         this.query.skip = 0;
         this.getAll();
     }
@@ -74,18 +74,18 @@ export class BrowsePage {
         })
     }
 
-    public checkFriends(arr){
-        arr.forEach((a)=>{
+    public checkFriends(arr) {
+        arr.forEach((a) => {
             if (this.friends.indexOf(a.eventCreator.facebook.id) != -1) {
                 a.friends = true;
             }
         })
     }
 
-    infinite(infiniteScroll){
-        if(this.events.length % 30 != 0) infiniteScroll.complete();
-        if(this.events.length % 30 == 0) {
-            this.getAll().then(() =>{
+    infinite(infiniteScroll) {
+        if (this.events.length % 30 != 0) infiniteScroll.complete();
+        else if (this.events.length % 30 == 0) {
+            this.getAll().then(() => {
                 infiniteScroll.complete();
             }, err => {
                 infiniteScroll.complete();
