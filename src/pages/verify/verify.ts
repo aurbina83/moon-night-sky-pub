@@ -15,74 +15,74 @@ import 'rxjs/add/operator/map';
   Ionic pages and navigation.
 */
 @Component({
-    selector: 'verify-page',
-    templateUrl: 'verify.html'
+  selector: 'verify-page',
+  templateUrl: 'verify.html'
 })
 export class VerifyPage {
-    public name;
-    public date;
-    public dob;
+  public name;
+  public date;
+  public dob;
 
 
-    constructor(private navCtrl: NavController, private menu: MenuController, private UserService: UserService, private alerts: Alerts, private loadingCtrl: LoadingController, private alertCtrl: AlertController) {}
+  constructor(private navCtrl: NavController, private menu: MenuController, private UserService: UserService, private alerts: Alerts, private loadingCtrl: LoadingController, private alertCtrl: AlertController) { }
 
-    ionViewDidEnter() {
-        this.menu.swipeEnable(false, 'menu1');
-    }
+  ionViewDidEnter() {
+    this.menu.swipeEnable(false, 'menu1');
+  }
 
-    ionViewWillLeave() {
-        this.menu.swipeEnable(true, 'menu1');
-    }
+  ionViewWillLeave() {
+    this.menu.swipeEnable(true, 'menu1');
+  }
 
-    public confirm(){
-        let date = moment(this.date).format("MM/DD/YY");
-        let dob = moment(this.dob).format("MM/DD/YYYY");
-        let alert = this.alertCtrl.create({
-            title: 'Confirm your information',
-            message: `Last Name: ${this.name}, DOB: ${dob}, Service Date: ${date}`,
-            buttons:[
-                {
-                    text: "Cancel",
-                    role: 'destructive',
-                    handler: data =>{
-                        return;
-                    }
-                },
-                {
-                    text: 'Continue',
-                    handler: data =>{
-                        this.verify();
-                    }
-                }
-            ]
-        })
-        alert.present();
-    }
-
-
-    public verify() {
-        let load = this.loadingCtrl.create({});
-        load.present();
-        this.date = moment(this.date).format("MM/DD/YYYY");
-        this.dob = moment(this.dob).format("MM/DD/YYYY");
-
-        this.date = this.date.toString();
-        this.dob = this.dob.toString();
-        let body = {
-            name: this.name,
-            date: this.date,
-            dob: this.dob
+  public confirm() {
+    let date = moment(this.date).format("MM/DD/YY");
+    let dob = moment(this.dob).format("MM/DD/YYYY");
+    let alert = this.alertCtrl.create({
+      title: 'Confirm your information',
+      message: `Last Name: ${this.name}, DOB: ${dob}, Service Date: ${date}`,
+      buttons: [
+        {
+          text: "Cancel",
+          role: 'destructive',
+          handler: data => {
+            return;
+          }
+        },
+        {
+          text: 'Continue',
+          handler: data => {
+            this.verify();
+          }
         }
-        this.UserService.verifyUser(body).then((res) =>{
-            load.dismiss().then(()=>{
-                this.alerts.toast("Service Verified!", null);
-                this.navCtrl.setRoot(WelcomePage);
-            })
-        }, (err) =>{
-            load.dismiss().then(()=>{
-                this.alerts.toast(err.message, null);
-                this.navCtrl.setRoot(PendingPage);
-            })
-        })
+      ]
+    })
+    alert.present();
+  }
+
+
+  public verify() {
+    let load = this.loadingCtrl.create({});
+    load.present();
+    this.date = moment(this.date).format("MM/DD/YYYY");
+    this.dob = moment(this.dob).format("MM/DD/YYYY");
+
+    this.date = this.date.toString();
+    this.dob = this.dob.toString();
+    let body = {
+      name: this.name,
+      date: this.date,
+      dob: this.dob
     }
+    this.UserService.verifyUser(body).then((res) => {
+      load.dismiss().then(() => {
+        this.alerts.toast("Service Verified!", null);
+        this.navCtrl.setRoot(WelcomePage);
+      })
+    }, (err) => {
+      load.dismiss().then(() => {
+        this.alerts.toast(err.message, null);
+        this.navCtrl.setRoot(PendingPage);
+      })
+    })
+  }
 }

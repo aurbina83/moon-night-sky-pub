@@ -1,20 +1,19 @@
-
 <ion-content scroll="false" padding class="login-container">
-    <section *ngIf="!loggingIn">
-        <div class="col header" text-center>
-            <h1>VETERAN CONNECT</h1>
-        </div>
-        <div class="col" text-center>
-            <img src="assets/images/Asset+1.png" alt="" class="logo">
-        </div>
-        <div class="col button-row" text-center>
-            <img src="assets/images/facebook-button.png" alt="" class="fb" (click)="login()">
-        </div>
-    </section>
+  <section *ngIf="!loggingIn">
+    <div class="col header" text-center>
+      <h1>VETERAN CONNECT</h1>
+    </div>
+    <div class="col" text-center>
+      <img src="assets/images/Asset+1.png" alt="" class="logo">
+    </div>
+    <div class="col button-row" text-center>
+      <img src="assets/images/facebook-button.png" alt="" class="fb" (click)="login()">
+    </div>
+  </section>
 </ion-content>
 
 <ion-footer *ngIf="!loggingIn">
-    <div class="footer">
-            <p id="tos" text-center> By creating an account, you are agreeing to the <a href="#" onclick="window.open('https://s3.amazonaws.com/veteranconnect-assets/Terms-of-service.pdf', '_system', 'location=no'); return false;">Terms of Service</a> and <a href="#" onclick="window.open('https://s3.amazonaws.com/veteranconnect-assets/Privacy-policy.pdf', '_system', 'location=no'); return false;">Privacy Policy</a></p>
-    </div>
+  <div class="footer">
+    <p id="tos" text-center> By creating an account, you are agreeing to the <a href="#" onclick="window.open('https://s3.amazonaws.com/veteranconnect-assets/Terms-of-service.pdf', '_system', 'location=no'); return false;">Terms of Service</a> and <a href="#" onclick="window.open('https://s3.amazonaws.com/veteranconnect-assets/Privacy-policy.pdf', '_system', 'location=no'); return false;">Privacy Policy</a></p>
+  </div>
 </ion-footer>

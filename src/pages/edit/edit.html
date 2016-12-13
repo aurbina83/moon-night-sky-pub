@@ -5,136 +5,136 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-    <ion-navbar color="dblue">
-        <ion-title [hidden]="page[2]">EDIT</ion-title>
-        <ion-buttons [hidden]=!page[2]>
-            <button ion-button icon-right (click)=backtoSearch() >
+  <ion-navbar color="dblue">
+    <ion-title [hidden]="page[2]">EDIT</ion-title>
+    <ion-buttons [hidden]=!page[2]>
+      <button ion-button icon-right (click)=backtoSearch()>
                 <ion-icon name=arrow-dropleft-circle></ion-icon>
                 New Search
             </button>
-        </ion-buttons>
-    </ion-navbar>
+    </ion-buttons>
+  </ion-navbar>
 </ion-header>
 
 
 <ion-content class="edit">
-        <div class="container p0 animated" [hidden]="!page[0]" [class.fadeIn]="page[0]">
-            <div class="bar" text-center>
-                Plan out the Op Order
-            </div>
-            <div class="content">
-                <ion-item no-lines>
-                    <ion-label stacked>What do you want to do?</ion-label>
-                    <ion-input [(ngModel)]="event.title"></ion-input>
-                </ion-item>
-                <p text-left>*Grab dinner, Drink some beer at Jorge's, Hunting trip, etc...</p>
-                <button block ion-button color="lred" [disabled]="!event.title" (click)="prev(0)">Submit</button>
-            </div>
-        </div>
-        <div class="container p1 animated" [hidden]="!page[1]" [class.fadeIn]="page[1]">
-            <div class="bar" text-center>
-                Set the Rally Point
-            </div>
-            <div class="content">
-                <ion-item no-lines>
-                    <ion-label stacked>Choose a Rally Point for this event.</ion-label>
-                    <ion-input [(ngModel)]="query.term"></ion-input>
-                </ion-item>
-                <p text-left>*Search in terms, or actual places (Gold's Gym, Park, Burgers, Buffalo Wild Wings, etc...)</p>
-                <ion-item no-lines>
-                    <ion-label stacked>Where?</ion-label>
-                    <ion-input [(ngModel)]="query.location"></ion-input>
-                </ion-item>
-                <p text-left>Pick a town/city (Detroit, LA, NYC, Atlanta, etc...)</p>
-                <button block ion-button color="lred" [disabled]="!query.term || !query.location" (click)="yelpSet()">Submit</button>
-            </div>
-        </div>
-        <div class="container p2 animated" [hidden]="!page[2]" [class.fadeIn]="page[2]">
-            <div class="bar" text-center>
-                Tap to Choose Set Rally Point
-            </div>
-                <ion-list>
-                    <ion-item *ngFor="let r of results" (click)="submit(r)" tappable>
-                        <ion-thumbnail item-left>
-                            <img src="{{r.image_url}}">
-                        </ion-thumbnail>
-                        <h2>{{r.name}}</h2>
-                        <h2>{{r.location.address[0]}}</h2>
-                        <p>{{r.location.city}}</p>
-                        <p>{{r.review_count}} reviews</p>
-                        <img src="{{r.rating_img_url}}" alt="">
-                    </ion-item>
-                </ion-list>
-                <ion-row>
-                    <p><strong>Powered by</strong> </p><img src="assets/images/yelp-logo-small.png" alt="">
-                </ion-row>
-            <ion-infinite-scroll (ionInfinite)="yelp($event)">
-                <ion-infinite-scroll-content></ion-infinite-scroll-content>
-            </ion-infinite-scroll>
-        </div>
-        <div class="container p3" [hidden]="!page[3]">
-            <div class="bar" text-center>
-                Details
-            </div>
-            <div class="content">
-                <ion-item no-lines>
-                    <ion-label stacked>The Devil is in the Details. Set the Objective of this Event, or a brief bio about yourself. (optional)</ion-label>
-                    <ion-textarea [(ngModel)]="event.description" rows="4"></ion-textarea>
-                </ion-item>
-                <p text-left>*Talk about politics, Plan an event for local wounded warriors, shoot the shit, tell the people about yourself etc...</p>
-                <button block ion-button color="lred"  (click)="prev(3)">Submit</button>
-            </div>
-        </div>
-        <div class="container p4" [hidden]="!page[4]">
-            <div class="bar" text-center>
-                Set the Date and Time
-            </div>
-            <div class="content">
-                <ion-item no-lines>
-                        <ion-label stacked>Date</ion-label>
-                        <ion-datetime displayFormat="DDDD, MMMM  DD"  pickerFormat="MMM/DD/YYYY" [max]="max" [min]="min" [(ngModel)]="event.dateTime"></ion-datetime>
-                </ion-item>
-                <ion-item no-lines>
-                        <ion-label stacked>Time</ion-label>
-                        <ion-datetime displayFormat="h:mm A" pickerFormat="hh : mm A" [(ngModel)]="event.dateTime" minuteValues="00,15,30,45"></ion-datetime>
-                </ion-item>
-                <p></p>
-                <button block ion-button color="lred"  [disabled]="!event.dateTime" (click)="prev(4)">Submit</button>
-            </div>
-        </div>
-        <div class="container p5" [hidden]="!page[5]">
-            <div class="bar" text-center>
-                Number of Guests
-            </div>
-            <div class="content">
-                <ion-item no-lines>
-                        <ion-label  stacked>How many people would you like to attend?</ion-label>
-                        <ion-select  [(ngModel)]="event.numGuests">
-                            <ion-option *ngFor="let guest of guestArray; let i=index" [value]="guestArray[i]">{{guestArray[i]}}</ion-option>
-                        </ion-select>
-                </ion-item>
-                <p text-left>*For events larger than 99 guests, keep this blank for unlimited guests. <br /><br>However, there'll be no communication available with people attending.</p>
-                <button block ion-button color="lred"  [disabled]="!event.dateTime" [hidden]="" (click)="prev(5)">Submit</button>
-            </div>
-        </div>
-        <div class="container p6 list" [hidden]="!page[6]">
-                <div (click)="active(0)" tappable class="front">
-                    <h1>OP ORDER</h1>
-                </div>
-                <div (click)="active(1)" tappable class="front">
-                    <h1>RALLY POINT</h1>
-                </div>
-                <div (click)="active(3)" tappable class="front">
-                    <h1>DETAILS</h1>
-                </div>
-                <div (click)="active(4)" tappable class="front">
-                    <h1>DATE AND TIME</h1>
-                </div>
-                <div (click)="active(5)" tappable class="front">
-                    <h1>NUMBER OF GUESTS</h1>
-                </div>
-                <div  tappable class="front subtn" (click)="subEvent()">
-                    <h1>SUBMIT</h1>
-                </div>
-        </div>
+  <div class="container p0 animated" [hidden]="!page[0]" [class.fadeIn]="page[0]">
+    <div class="bar" text-center>
+      Plan out the Op Order
+    </div>
+    <div class="content">
+      <ion-item no-lines>
+        <ion-label stacked>What do you want to do?</ion-label>
+        <ion-input [(ngModel)]="event.title"></ion-input>
+      </ion-item>
+      <p text-left>*Grab dinner, Drink some beer at Jorge's, Hunting trip, etc...</p>
+      <button block ion-button color="lred" [disabled]="!event.title" (click)="prev(0)">Submit</button>
+    </div>
+  </div>
+  <div class="container p1 animated" [hidden]="!page[1]" [class.fadeIn]="page[1]">
+    <div class="bar" text-center>
+      Set the Rally Point
+    </div>
+    <div class="content">
+      <ion-item no-lines>
+        <ion-label stacked>Choose a Rally Point for this event.</ion-label>
+        <ion-input [(ngModel)]="query.term"></ion-input>
+      </ion-item>
+      <p text-left>*Search in terms, or actual places (Gold's Gym, Park, Burgers, Buffalo Wild Wings, etc...)</p>
+      <ion-item no-lines>
+        <ion-label stacked>Where?</ion-label>
+        <ion-input [(ngModel)]="query.location"></ion-input>
+      </ion-item>
+      <p text-left>Pick a town/city (Detroit, LA, NYC, Atlanta, etc...)</p>
+      <button block ion-button color="lred" [disabled]="!query.term || !query.location" (click)="yelpSet()">Submit</button>
+    </div>
+  </div>
+  <div class="container p2 animated" [hidden]="!page[2]" [class.fadeIn]="page[2]">
+    <div class="bar" text-center>
+      Tap to Choose Set Rally Point
+    </div>
+    <ion-list>
+      <ion-item *ngFor="let r of results" (click)="submit(r)" tappable>
+        <ion-thumbnail item-left>
+          <img src="{{r.image_url}}">
+        </ion-thumbnail>
+        <h2>{{r.name}}</h2>
+        <h2>{{r.location.address[0]}}</h2>
+        <p>{{r.location.city}}</p>
+        <p>{{r.review_count}} reviews</p>
+        <img src="{{r.rating_img_url}}" alt="">
+      </ion-item>
+    </ion-list>
+    <ion-row>
+      <p><strong>Powered by</strong> </p><img src="assets/images/yelp-logo-small.png" alt="">
+    </ion-row>
+    <ion-infinite-scroll (ionInfinite)="yelp($event)">
+      <ion-infinite-scroll-content></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  </div>
+  <div class="container p3" [hidden]="!page[3]">
+    <div class="bar" text-center>
+      Details
+    </div>
+    <div class="content">
+      <ion-item no-lines>
+        <ion-label stacked>The Devil is in the Details. Set the Objective of this Event, or a brief bio about yourself. (optional)</ion-label>
+        <ion-textarea [(ngModel)]="event.description" rows="4"></ion-textarea>
+      </ion-item>
+      <p text-left>*Talk about politics, Plan an event for local wounded warriors, shoot the shit, tell the people about yourself etc...</p>
+      <button block ion-button color="lred" (click)="prev(3)">Submit</button>
+    </div>
+  </div>
+  <div class="container p4" [hidden]="!page[4]">
+    <div class="bar" text-center>
+      Set the Date and Time
+    </div>
+    <div class="content">
+      <ion-item no-lines>
+        <ion-label stacked>Date</ion-label>
+        <ion-datetime displayFormat="DDDD, MMMM  DD" pickerFormat="MMM/DD/YYYY" [max]="max" [min]="min" [(ngModel)]="event.dateTime"></ion-datetime>
+      </ion-item>
+      <ion-item no-lines>
+        <ion-label stacked>Time</ion-label>
+        <ion-datetime displayFormat="h:mm A" pickerFormat="hh : mm A" [(ngModel)]="event.dateTime" minuteValues="00,15,30,45"></ion-datetime>
+      </ion-item>
+      <p></p>
+      <button block ion-button color="lred" [disabled]="!event.dateTime" (click)="prev(4)">Submit</button>
+    </div>
+  </div>
+  <div class="container p5" [hidden]="!page[5]">
+    <div class="bar" text-center>
+      Number of Guests
+    </div>
+    <div class="content">
+      <ion-item no-lines>
+        <ion-label stacked>How many people would you like to attend?</ion-label>
+        <ion-select [(ngModel)]="event.numGuests">
+          <ion-option *ngFor="let guest of guestArray; let i=index" [value]="guestArray[i]">{{guestArray[i]}}</ion-option>
+        </ion-select>
+      </ion-item>
+      <p text-left>*For events larger than 99 guests, keep this blank for unlimited guests. <br /><br>However, there'll be no communication available with people attending.</p>
+      <button block ion-button color="lred" [disabled]="!event.dateTime" [hidden]="" (click)="prev(5)">Submit</button>
+    </div>
+  </div>
+  <div class="container p6 list" [hidden]="!page[6]">
+    <div (click)="active(0)" tappable class="front">
+      <h1>OP ORDER</h1>
+    </div>
+    <div (click)="active(1)" tappable class="front">
+      <h1>RALLY POINT</h1>
+    </div>
+    <div (click)="active(3)" tappable class="front">
+      <h1>DETAILS</h1>
+    </div>
+    <div (click)="active(4)" tappable class="front">
+      <h1>DATE AND TIME</h1>
+    </div>
+    <div (click)="active(5)" tappable class="front">
+      <h1>NUMBER OF GUESTS</h1>
+    </div>
+    <div tappable class="front subtn" (click)="subEvent()">
+      <h1>SUBMIT</h1>
+    </div>
+  </div>
 </ion-content>

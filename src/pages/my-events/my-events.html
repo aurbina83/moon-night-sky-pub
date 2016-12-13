@@ -15,25 +15,25 @@
 
 
 <ion-content padding class="my-events">
-    <ion-list>
-        <ion-item-sliding *ngFor="let e of events" tappable>
-            <ion-item (click)="go(e)" text-wrap>
-                <ion-avatar item-left>
-                    <img src="{{e.eventCreator.imgUrl}}" alt="">
-                </ion-avatar>
-                <h2>{{e.title}}</h2>
-                <h3>@ {{e.name}}</h3>
-                <p>{{e.dateTime | moments: "dddd, MMM Do @ h:mm a"}} </p>
-                <ion-icon name="arrow-back" item-right warn></ion-icon>
-            </ion-item>
-            <ion-item-options side="right">
-                <button color="warn" ion-button (click)="edit(e)" hidden>
+  <ion-list>
+    <ion-item-sliding *ngFor="let e of events" tappable>
+      <ion-item (click)="go(e)" text-wrap>
+        <ion-avatar item-left>
+          <img src="{{e.eventCreator.imgUrl}}" alt="">
+        </ion-avatar>
+        <h2>{{e.title}}</h2>
+        <h3>@ {{e.name}}</h3>
+        <p>{{e.dateTime | moments: "dddd, MMM Do @ h:mm a"}} </p>
+        <ion-icon name="arrow-back" item-right warn></ion-icon>
+      </ion-item>
+      <ion-item-options side="right">
+        <button color="warn" ion-button (click)="edit(e)" hidden>
                     <ion-icon name=hammer></ion-icon>Edit
                 </button>
-                <button color="danger" ion-button (click)="delete(e)">
+        <button color="danger" ion-button (click)="delete(e)">
                     <ion-icon name=trash></ion-icon>Delete
                 </button>
-            </ion-item-options>
-        </ion-item-sliding>
-    </ion-list>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
 </ion-content>

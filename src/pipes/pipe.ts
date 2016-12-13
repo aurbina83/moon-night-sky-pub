@@ -15,20 +15,20 @@ export class Moment {
   /*
     Takes a value and makes it lowercase.
    */
-   transform(value, args) {
-     value = value + '';
-     args = args + '';
-     return moment(value).format(args)
-   }
+  transform(value, args) {
+    value = value + '';
+    args = args + '';
+    return moment(value).format(args)
+  }
 }
 
-@Pipe ({
-    name: 'momentFromNow'
+@Pipe({
+  name: 'momentFromNow'
 })
 
 export class MomentFromNow {
-    transform(value) {
-        value = value + '';
-        return moment(value).fromNow();
-    }
+  transform(value) {
+    value = value + '';
+    return moment(value).fromNow();
+  }
 }

@@ -8,18 +8,18 @@ import { NavController, MenuController } from 'ionic-angular';
   Ionic pages and navigation.
 */
 @Component({
-    selector: 'crisis-page',
-    templateUrl: 'crisis.html'
+  selector: 'crisis-page',
+  templateUrl: 'crisis.html'
 })
 
 export class CrisisPage {
 
-    constructor(private navCtrl: NavController, private menu: MenuController) {
+  constructor(private navCtrl: NavController, private menu: MenuController) {
 
-    }
+  }
 
-    ionViewWillLoad(){
-        this.menu.swipeEnable(true, 'menu1');
-    }
+  ionViewWillLoad() {
+    this.menu.swipeEnable(true, 'menu1');
+  }
 
 }

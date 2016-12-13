@@ -6,32 +6,32 @@
 -->
 <ion-header>
 
-    <ion-navbar color="dblue">
-        <ion-title>REGISTRATION</ion-title>
-    </ion-navbar>
+  <ion-navbar color="dblue">
+    <ion-title>REGISTRATION</ion-title>
+  </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding class="register">
-    <ion-list>
-        <form (submit)="onSubmit()">
-            <ion-item>
-                <ion-label floating>Branch</ion-label>
-                <ion-select (ionChange)="setMos()" name="branch" [(ngModel)]="user.branch">
-                    <ion-option value="Army" selected="true">Army</ion-option>
-                    <ion-option value="Marines">Marines</ion-option>
-                    <ion-option value="Air Force">Air Force</ion-option>
-                    <ion-option value="Navy">Navy</ion-option>
-                </ion-select>
-            </ion-item>
-            <ion-item>
-                <ion-label floating>{{displayMos}}</ion-label>
-                <ion-input type="text" name="mos" required [(ngModel)]="user.mos" (input)="validateMos()"></ion-input>
-             </ion-item>
-             <p *ngIf="!user.mos && mosTouch" color="danger" padding-left>*Required</p>
-             <p *ngIf="!mosCheck" color="danger" padding-left> {{patternMessage}}</p>
-            <button ion-button [disabled]="!mosCheck || !user.mos" type="submit" block color="dred">SUBMIT</button>
-        </form>
-    </ion-list>
+  <ion-list>
+    <form (submit)="onSubmit()">
+      <ion-item>
+        <ion-label floating>Branch</ion-label>
+        <ion-select (ionChange)="setMos()" name="branch" [(ngModel)]="user.branch">
+          <ion-option value="Army" selected="true">Army</ion-option>
+          <ion-option value="Marines">Marines</ion-option>
+          <ion-option value="Air Force">Air Force</ion-option>
+          <ion-option value="Navy">Navy</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>{{displayMos}}</ion-label>
+        <ion-input type="text" name="mos" required [(ngModel)]="user.mos" (input)="validateMos()"></ion-input>
+      </ion-item>
+      <p *ngIf="!user.mos && mosTouch" color="danger" padding-left>*Required</p>
+      <p *ngIf="!mosCheck" color="danger" padding-left> {{patternMessage}}</p>
+      <button ion-button [disabled]="!mosCheck || !user.mos" type="submit" block color="dred">SUBMIT</button>
+    </form>
+  </ion-list>
 </ion-content>

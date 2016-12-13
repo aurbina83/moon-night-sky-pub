@@ -12,35 +12,35 @@ import { WelcomePage } from '../welcome/welcome';
   Ionic pages and navigation.
 */
 @Component({
-    selector: 'qrf-accept-page',
-    templateUrl: 'qrf-accept.html'
+  selector: 'qrf-accept-page',
+  templateUrl: 'qrf-accept.html'
 })
 export class QrfAcceptPage {
-    public qrf= {
-        _id: null,
-        description: null,
-        creatorInfo: {
-            firstName: null,
-            lastName: null,
-            imgUrl: null,
-            branch: null,
-            branchImg: null
-        }
-    };
-
-    constructor(private navCtrl: NavController, private params: NavParams, private qrfService: QrfService, private alertService: Alerts) {
-        this.qrf = params.get("qrf");
+  public qrf = {
+    _id: null,
+    description: null,
+    creatorInfo: {
+      firstName: null,
+      lastName: null,
+      imgUrl: null,
+      branch: null,
+      branchImg: null
     }
+  };
 
-    decline(){
-        this.navCtrl.setRoot(WelcomePage);
-    }
+  constructor(private navCtrl: NavController, private params: NavParams, private qrfService: QrfService, private alertService: Alerts) {
+    this.qrf = params.get("qrf");
+  }
 
-    join() {
-        this.qrfService.join(this.qrf._id).then(() => {
-            this.navCtrl.setRoot(QrfChatPage, {_id: this.qrf._id});
-        }, (err) => {
-            this.alertService.toast(err.message, "toastError");
-        })
-    }
+  decline() {
+    this.navCtrl.setRoot(WelcomePage);
+  }
+
+  join() {
+    this.qrfService.join(this.qrf._id).subscribe(() => {
+      this.navCtrl.setRoot(QrfChatPage, { _id: this.qrf._id });
+    }, (err) => {
+      this.alertService.toast(err.message, "toastError");
+    })
+  }
 }

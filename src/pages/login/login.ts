@@ -13,42 +13,44 @@ import {Alerts} from '../../providers/alerts/alerts';
   Ionic pages and navigation.
 */
 @Component({
-    selector: 'login-page',
-    templateUrl: 'login.html'
+  selector: 'login-page',
+  templateUrl: 'login.html'
 })
 export class LoginPage {
-    public loggingIn;
-    public status;
-    constructor(private navCtrl: NavController, private UserService: UserService, private menu: MenuController, private loadingCtrl: LoadingController, private alertService: Alerts) {
+  public loggingIn;
+  public status;
+  constructor(private navCtrl: NavController, private UserService: UserService, private menu: MenuController, private loadingCtrl: LoadingController, private alertService: Alerts) {
+    this.loggingIn = false;
+  }
+
+  ionViewDidEnter() {
+    this.menu.swipeEnable(false, 'menu1');
+  }
+
+  ionViewWillLeave() {
+    this.menu.swipeEnable(true, 'menu1');
+  }
+
+  public login() {
+    this.loggingIn = true;
+    let loading = this.loadingCtrl.create({
+      showBackdrop: false
+    });
+    loading.present();
+    this.UserService.login().then((res) => {
+      this.status = res;
+      loading.dismiss().then(() => {
+
+        //Navigate user based on status.
+        if (!this.status.branch) this.navCtrl.setRoot(RegisterPage);
+        if (this.status.branch && !this.status.verified) this.navCtrl.setRoot(PendingPage);
+        if (this.status.branch && this.status.verified) this.navCtrl.setRoot(WelcomePage);
+      });
+    }, (err) => {
+      loading.dismiss().then(() => {
         this.loggingIn = false;
-    }
-
-    ionViewDidEnter() {
-        this.menu.swipeEnable(false, 'menu1');
-    }
-
-    ionViewWillLeave() {
-        this.menu.swipeEnable(true, 'menu1');
-    }
-
-    public login() {
-        this.loggingIn = true;
-        let loading = this.loadingCtrl.create({
-            showBackdrop: false
-        });
-        loading.present();
-        this.UserService.login().then((res) => {
-            this.status = res;
-            loading.dismiss().then(()=>{
-                if(!this.status.branch) this.navCtrl.setRoot(RegisterPage);
-                if(this.status.branch && !this.status.verified) this.navCtrl.setRoot(PendingPage);
-                if(this.status.branch && this.status.verified) this.navCtrl.setRoot(WelcomePage);
-            });
-        }, (err) => {
-            loading.dismiss().then(() => {
-                this.loggingIn = false;
-                this.alertService.toast(err, null);
-            });
-        });
-    }
+        this.alertService.toast(err, null);
+      });
+    });
+  }
 }

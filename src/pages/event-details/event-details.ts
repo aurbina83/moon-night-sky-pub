@@ -11,18 +11,19 @@ import { Alerts } from '../../providers/alerts/alerts';
   Ionic pages and navigation.
 */
 @Component({
-    selector: 'event-details-page',
-    templateUrl: 'event-details.html',
+  selector: 'event-details-page',
+  templateUrl: 'event-details.html',
 })
 export class EventDetailsPage {
-    public event;
+  public event;
 
-    constructor(private navCtrl: NavController, private params: NavParams, private EventService: EventService, private alerts: Alerts) {
-        this.event = params.get("event");
-    }
+  constructor(private navCtrl: NavController, private params: NavParams, private EventService: EventService, private alerts: Alerts) {
+    this.event = params.get("event");
+  }
 
-    comments() {
-        this.navCtrl.push(CommentsPage, { _id: this.event._id });
-    }
+  //Navigate to comment page
+  comments() {
+    this.navCtrl.push(CommentsPage, { _id: this.event._id });
+  }
 
 }

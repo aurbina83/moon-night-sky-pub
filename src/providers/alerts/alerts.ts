@@ -11,24 +11,24 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class Alerts {
 
-  constructor(private alertCtrl: AlertController, private toastCtrl: ToastController) {}
+  constructor(private alertCtrl: AlertController, private toastCtrl: ToastController) { }
 
   basic(title, subtitle) {
     let alert = this.alertCtrl.create({
-        title: title,
-        subTitle: subtitle,
-        buttons: ['OK']
+      title: title,
+      subTitle: subtitle,
+      buttons: ['OK']
     });
     alert.present();
   }
 
-  toast(message, css){
-      let toast = this.toastCtrl.create({
-          message: message,
-          duration: 3000,
-          cssClass: css
-      });
-      toast.present();
+  toast(message, css) {
+    let toast = this.toastCtrl.create({
+      message: message,
+      duration: 3000,
+      cssClass: css
+    });
+    toast.present();
   }
 
 }

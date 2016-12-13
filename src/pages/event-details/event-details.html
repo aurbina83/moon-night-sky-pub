@@ -5,56 +5,56 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-    <ion-navbar color="dblue">
-        <button ion-button menuToggle>
+  <ion-navbar color="dblue">
+    <button ion-button menuToggle>
           <ion-icon name="menu"></ion-icon>
         </button>
-        <ion-title>DETAILS</ion-title>
-    </ion-navbar>
+    <ion-title>DETAILS</ion-title>
+  </ion-navbar>
 </ion-header>
 
 
 <ion-content class="event-details">
-    <img src="assets/{{event.eventCreator.branchImg}}">
-    <ion-item no-lines>
-        <ion-row>
-            <ion-col width-20>
-                <ion-avatar>
-                    <img src="{{event.eventCreator.imgUrl}}" alt="">
-                </ion-avatar>
-            </ion-col>
-            <ion-col>
-                <h2>{{event.eventCreator.firstName}} {{event.eventCreator.lastName}}</h2>
-                <h6>{{event.eventCreator.branch}}</h6>
-            </ion-col>
-        </ion-row>
-    </ion-item>
+  <img src="assets/{{event.eventCreator.branchImg}}">
+  <ion-item no-lines>
+    <ion-row>
+      <ion-col width-20>
+        <ion-avatar>
+          <img src="{{event.eventCreator.imgUrl}}" alt="">
+        </ion-avatar>
+      </ion-col>
+      <ion-col>
+        <h2>{{event.eventCreator.firstName}} {{event.eventCreator.lastName}}</h2>
+        <h6>{{event.eventCreator.branch}}</h6>
+      </ion-col>
+    </ion-row>
+  </ion-item>
 
-    <ion-item no-lines>
-        <h1>{{event.title}}</h1>
-    </ion-item>
+  <ion-item no-lines>
+    <h1>{{event.title}}</h1>
+  </ion-item>
 
 
-    <ion-item padding no-lines text-wrap>
-        <ion-icon name="pin-outline" color="lblue" item-left large></ion-icon>
-        <h2>{{event.name}}</h2>
-        <p>{{event.eventAddress}}. {{event.city}}, {{event.state}}.</p>
-    </ion-item>
+  <ion-item padding no-lines text-wrap>
+    <ion-icon name="pin-outline" color="lblue" item-left large></ion-icon>
+    <h2>{{event.name}}</h2>
+    <p>{{event.eventAddress}}. {{event.city}}, {{event.state}}.</p>
+  </ion-item>
 
-    <ion-item no-lines>
-        <ion-icon name="clock-outline" item-left color="lblue" large></ion-icon>
-        <h3>{{event.dateTime | moments: "ddd, MMM Do @ h:mm a"}}</h3>
-    </ion-item>
+  <ion-item no-lines>
+    <ion-icon name="clock-outline" item-left color="lblue" large></ion-icon>
+    <h3>{{event.dateTime | moments: "ddd, MMM Do @ h:mm a"}}</h3>
+  </ion-item>
 
-    <ion-item no-lines text-wrap>
-        <ion-icon name="information-circle-outline" item-left color="lblue" large></ion-icon>
-        <h3>Details</h3>
-        <p>{{event.description}}</p>
-    </ion-item>
+  <ion-item no-lines text-wrap>
+    <ion-icon name="information-circle-outline" item-left color="lblue" large></ion-icon>
+    <h3>Details</h3>
+    <p>{{event.description}}</p>
+  </ion-item>
 
-    <ion-item class="btns" no-lines>
-        <button block ion-button color="dred" (click)="comments()">
+  <ion-item class="btns" no-lines>
+    <button block ion-button color="dred" (click)="comments()">
             Comments
         </button>
-    </ion-item>
+  </ion-item>
 </ion-content>

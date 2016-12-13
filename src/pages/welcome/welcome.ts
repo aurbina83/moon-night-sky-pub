@@ -20,127 +20,97 @@ import { NativeStorage, Diagnostic, InAppBrowser } from 'ionic-native';
   Ionic pages and navigation.
 */
 @Component({
-    selector: 'welcome-page',
-    templateUrl: 'welcome.html'
+  selector: 'welcome-page',
+  templateUrl: 'welcome.html'
 })
 export class WelcomePage {
-    public status;
+  public status;
 
 
-    constructor(private navCtrl: NavController, private menu: MenuController, private UserService: UserService, private QrfService: QrfService, private EventService: EventService, private alertService: Alerts, private loadingCtrl: LoadingController, private actionCtrl: ActionSheetController, private platform: Platform) {
-        this.status = UserService.status;
+  constructor(private navCtrl: NavController, private menu: MenuController, private UserService: UserService, private QrfService: QrfService, private EventService: EventService, private alertService: Alerts, private loadingCtrl: LoadingController, private actionCtrl: ActionSheetController, private platform: Platform) {
+    this.status = UserService.status;
+  }
+
+  ionViewWillEnter() {
+    this.UserService.checkLocation();
+  }
+  ionViewDidEnter() {
+    if (!this.status.branch) this.navCtrl.setRoot(RegisterPage);
+    else if (this.status.branch && !this.status.verified) this.navCtrl.setRoot(PendingPage);
+    else {
+      this.platform.ready().then(() => {
+        this.pushToken();
+        this.locationCheck();
+        this.notificationStore();
+      })
     }
+  }
 
-    ionViewWillEnter() {
-        this.UserService.checkLocation();
-    }
-    ionViewDidEnter() {
-        if (!this.status.branch) this.navCtrl.setRoot(RegisterPage);
-        else if (this.status.branch && !this.status.verified) this.navCtrl.setRoot(PendingPage);
-        else {
-            this.platform.ready().then(() => {
-                this.pushToken();
-                this.locationCheck();
-                this.notificationStore();
-            })
-        }
-    }
+  // Check to see if user has granted location permissions. If not, send them to pergatory.
+  locationCheck() {
+    Diagnostic.getLocationAuthorizationStatus().then(status => {
+      if (status == "denied" || status == "not_requested" || status == "DENIED" || status == "NOT_REQUESTED") this.navCtrl.push(LocationPage);
+    }).catch(e => console.log(e));
+  }
 
-    locationCheck(){
-        Diagnostic.getLocationAuthorizationStatus().then(status =>{
-            if(status == "denied" || status == "not_requested" || status == "DENIED" || status == "NOT_REQUESTED") this.navCtrl.push(LocationPage);
-        }).catch(e => console.log(e));
-    }
+  // Check to see if there are any pending notifications.
+  notificationStore() {
+    NativeStorage.getItem('notification').then((data) => {
+      this.notificationCheck(data);
+    }, (err) => {
+      return;
+    })
+  }
 
-    notificationStore() {
-        NativeStorage.getItem('notification').then((data) => {
-            this.notificationCheck(data);
+  // If notifications exist, check to see if they are routable notifications.
+  notificationCheck(data) {
+    if (data.notification.payload.additionalData) {
+      let d = data.notification.payload.additionalData;
+      if (d.type && d.type == "deleted") this.navCtrl.push(BrowsePage);
+      if (d.type && d.type == "web") {
+        let browser = new InAppBrowser(d.url, '_system');
+        browser.show();
+      }
+      if (d.type && d.type == "qrf") {
+        this.QrfService.getOne(d.id).subscribe((data) => {
+          this.navCtrl.push(QrfAcceptPage, { qrf: data });
         }, (err) => {
-            return;
+          console.log(err.message);
         })
+      }
+      if (d.type && d.type == "qrfChat") this.navCtrl.push(QrfChatPage, { _id: d.id });
+      if (d.type && d.type == "event") {
+        this.EventService.getOne(d.id).subscribe((data) => {
+          this.navCtrl.push(EventDetailsPage, { event: data });
+        }, (err) => {
+          console.log(err.message);
+        })
+      }
     }
+    NativeStorage.remove('notification');
+  }
 
-    // firstVisit() {
-    //     NativeStorage.getItem('first_visit').then((data) => {
-    //         return;
-    //     }, (err) => {
-    //         this.showActionSheet();
-    //     })
-    // }
+  // Send push token to database.
+  pushToken() {
+    let callback = (data) => {
+      let pushToken = {
+        id: data.userId,
+        pushToken: data.pushToken
+      }
+      this.UserService.updateUser("push", this.status._id, pushToken).then((res) => {
+        return;
+      }, (err) => {
+        this.alertService.toast(err.message, "toastError");
+      });
+    };
+    window['plugins'].OneSignal.getIds(callback);
+  }
 
-    notificationCheck(data) {
-        if (data.notification.payload.additionalData) {
-            let d = data.notification.payload.additionalData;
-            if (d.type && d.type == "deleted") this.navCtrl.push(BrowsePage);
-            if(d.type && d.type == "web") {
-                let browser = new InAppBrowser(d.url, '_system');
-                browser.show();
-            }
-            if (d.type && d.type == "qrf") {
-                this.QrfService.getOne(d.id).then((data) => {
-                    this.navCtrl.push(QrfAcceptPage, { qrf: data });
-                }, (err) => {
-                    console.log(err.message);
-                })
-            }
-            if (d.type && d.type == "qrfChat") this.navCtrl.push(QrfChatPage, { _id: d.id });
-            if (d.type && d.type == "event") {
-                this.EventService.getOne(d.id).then((data) => {
-                    this.navCtrl.push(EventDetailsPage, { event: data });
-                }, (err) => {
-                    console.log(err.message);
-                })
-            }
-        }
-        NativeStorage.remove('notification');
-    }
+  browse() {
+    this.navCtrl.setRoot(BrowsePage);
+  }
 
-    pushToken() {
-        let callback = (data) => {
-            let pushToken = {
-                id: data.userId,
-                pushToken: data.pushToken
-            }
-            this.UserService.updateUser("push", this.status._id, pushToken).then((res) => {
-                return;
-            }, (err) => {
-                this.alertService.toast(err.message, "toastError");
-            });
-        };
-        window['plugins'].OneSignal.getIds(callback);
-    }
-
-    browse() {
-        this.navCtrl.setRoot(BrowsePage);
-    }
-
-    create() {
-        this.navCtrl.setRoot(CreatePage);
-    }
-
-    // showActionSheet() {
-    //     NativeStorage.setItem('first_visit', true).then(() => {
-    //         let actionSheet = this.actionCtrl.create({
-    //             title: "We're still pretty new, and this app works a lot better when there are more veterans using it. Help us get the word out by sharing Veteran Connect on Facebook.",
-    //             buttons: [
-    //                 {
-    //                     text: 'Share on Facebook',
-    //                     handler: () => {
-    //                         this.share();
-    //                     }
-    //                 },
-    //                 {
-    //                     text: 'Cancel',
-    //                     role: "cancel",
-    //                     handler: () => {
-    //                         return;
-    //                     }
-    //                 }
-    //             ]
-    //         })
-    //         actionSheet.present();
-    //     }, (err) => {
-    //         return;
-    //     })
-    // }
+  create() {
+    this.navCtrl.setRoot(CreatePage);
+  }
 }

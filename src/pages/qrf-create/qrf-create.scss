@@ -1,137 +1,150 @@
 qrf-create-page {
-    .qrf-create {
-        background-color: #424242;
-        font-family: "Open Sans", sans-serif;
-        text-align: center;
-        color: white;
+  .qrf-create {
+    background-color: #424242;
+    font-family: "Open Sans", sans-serif;
+    text-align: center;
+    color: white;
 
-        .warn{
-            background-color: #DB222A;
-            width: 100%;
-            margin: 0 auto;
-            padding: 10px 0;
-        }
-
-        .title{
-            background-color: white;
-            width: 100%;
-            margin: 0 auto;
-            padding: 10px 0;
-            color: #424242;
-        }
-        .intro {
-            padding: 10px 30px;
-            width: 100%;
-            color: white;
-
-
-            h2, h4, h6, p, ion-icon {
-                color: white;
-                line-height: 25px;
-            }
-        }
-
-        .info {
-            background-color: #A31621;
-            padding: 10px 10px;
-            color: white;
-
-
-            h2, h4, h6, p, ion-icon {
-                color: white;
-                line-height: 25px;
-            }
-        }
-
-        .how {
-            background-color: #37718E;
-            position: relative;
-            padding: 30px 10px;
-            width: 100%;
-            height: 85vh;
-            color: white;
-
-            button {
-                font-weight: bolder;
-            }
-
-            h2, h4, h6, p, ion-icon {
-                color: white;
-                line-height: 25px;
-            }
-        }
-
-        .qrf-form {
-            height: 100%;
-            background-color: white;
-            .bar{
-                background-color: red;
-                color: white;
-                padding: 15px;
-                font-size: 15px;
-                font-family: "Montserrat", sans-serif;
-            }
-            .content {
-                height: 70vh;
-                display: flex;
-                justify-content: center;
-                align-content: center;
-                flex-direction: column;
-                padding: 20px;
-                p {
-                    font-size: 10px;
-                    color: #626262;
-                }
-                ion-textarea{
-                    border: 1px solid #b7b7b7 !important;
-                    border-radius: 2px !important;
-                    box-shadow: 2px 2px 2px 0 rgba(31,31,33,0.2) inset !important;
-                    text-shadow: 1px 1px 0 rgba(255,255,255,0.66) !important;
-                    padding: 10px;
-                    font-size: 12px;
-
-                }
-
-                .ion-button{
-                    margin-top: 20px;
-                    font-family: "Montserrat", sans-serif;
-                }
-
-            }
-        }
+    .warn {
+      background-color: #DB222A;
+      width: 100%;
+      margin: 0 auto;
+      padding: 10px 0;
     }
+
+    .title {
+      background-color: white;
+      width: 100%;
+      margin: 0 auto;
+      padding: 10px 0;
+      color: #424242;
+    }
+
+    .intro {
+      padding: 10px 30px;
+      width: 100%;
+      color: white;
+
+      h2,
+      h4,
+      h6,
+      ion-icon,
+      p {
+        color: white;
+        line-height: 25px;
+      }
+    }
+
+    .info {
+      background-color: #A31621;
+      padding: 10px;
+      color: white;
+
+      h2,
+      h4,
+      h6,
+      ion-icon,
+      p {
+        color: white;
+        line-height: 25px;
+      }
+    }
+
+    .how {
+      background-color: #37718E;
+      position: relative;
+      padding: 30px 10px;
+      width: 100%;
+      height: 85vh;
+      color: white;
+
+      button {
+        font-weight: bolder;
+      }
+
+      h2,
+      h4,
+      h6,
+      ion-icon,
+      p {
+        color: white;
+        line-height: 25px;
+      }
+    }
+
+    .qrf-form {
+      height: 100%;
+      background-color: white;
+
+      .bar {
+        background-color: red;
+        color: white;
+        padding: 15px;
+        font-size: 15px;
+        font-family: "Montserrat", sans-serif;
+      }
+
+      .content {
+        height: 70vh;
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        flex-direction: column;
+        padding: 20px;
+
+        p {
+          font-size: 10px;
+          color: #626262;
+        }
+
+        ion-textarea {
+          border: 1px solid #b7b7b7 !important;
+          border-radius: 2px !important;
+          box-shadow: 2px 2px 2px 0 rgba(31,31,33,0.2) inset !important;
+          text-shadow: 1px 1px 0 rgba(255,255,255,0.66) !important;
+          padding: 10px;
+          font-size: 12px;
+        }
+
+        .ion-button {
+          margin-top: 20px;
+          font-family: "Montserrat", sans-serif;
+        }
+      }
+    }
+  }
 }
 
-warning-page{
-    scroll-content {
-        overflow-y: hidden;
-    }
-    .warning {
-        position: relative;
-        height: 100%;
+warning-page {
+  scroll-content {
+    overflow-y: hidden;
+  }
 
-        .body {
-            .header {
-                text-align: center;
-            }
+  .warning {
+    position: relative;
+    height: 100%;
 
-            p {
-                font-size: 1.5rem;
-            }
-            padding: 0 20px;
-            margin-top: 30px;
-        }
+    .body {
+      .header {
+        text-align: center;
+      }
 
-        .cta {
-            padding: 0 20px;
-            text-align: center;
-
-            .ion-button {
-                margin: 15px 0;
-                font-weight: bold;
-                // font-size: 20px;
-            }
-        }
+      p {
+        font-size: 1.5rem;
+      }
+      padding: 0 20px;
+      margin-top: 30px;
     }
 
+    .cta {
+      padding: 0 20px;
+      text-align: center;
+
+      .ion-button {
+        margin: 15px 0;
+        font-weight: bold;
+        // font-size: 20px;
+      }
+    }
+  }
 }

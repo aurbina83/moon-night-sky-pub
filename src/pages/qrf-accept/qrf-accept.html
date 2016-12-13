@@ -5,43 +5,43 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-    <ion-navbar color="dblue">
-        <button ion-button menuToggle>
+  <ion-navbar color="dblue">
+    <button ion-button menuToggle>
           <ion-icon name="menu"></ion-icon>
         </button>
-        <ion-title>QRF HUDDLE</ion-title>
-    </ion-navbar>
+    <ion-title>QRF HUDDLE</ion-title>
+  </ion-navbar>
 </ion-header>
 
 
 <ion-content class="qrf-accept">
-    <img src="assets/{{qrf.creatorInfo.branchImg}}">
-    <ion-item no-lines>
-        <ion-row>
-            <ion-col width-20>
-                <ion-avatar>
-                    <img src="{{qrf.creatorInfo.imgUrl}}" alt="">
-                </ion-avatar>
-            </ion-col>
-            <ion-col>
-                <h2>{{qrf.creatorInfo.firstName}} {{qrf.creatorInfo.lastName}}</h2>
-                <h6>{{qrf.creatorInfo.branch}}</h6>
-            </ion-col>
-        </ion-row>
-    </ion-item>
+  <img src="assets/{{qrf.creatorInfo.branchImg}}">
+  <ion-item no-lines>
+    <ion-row>
+      <ion-col width-20>
+        <ion-avatar>
+          <img src="{{qrf.creatorInfo.imgUrl}}" alt="">
+        </ion-avatar>
+      </ion-col>
+      <ion-col>
+        <h2>{{qrf.creatorInfo.firstName}} {{qrf.creatorInfo.lastName}}</h2>
+        <h6>{{qrf.creatorInfo.branch}}</h6>
+      </ion-col>
+    </ion-row>
+  </ion-item>
 
-    <ion-item no-lines text-wrap>
-        <ion-icon name="information-circle-outline" item-left color="lblue" large></ion-icon>
-        <h2>Details</h2>
-        <h6>{{qrf.description}}</h6>
-    </ion-item>
+  <ion-item no-lines text-wrap>
+    <ion-icon name="information-circle-outline" item-left color="lblue" large></ion-icon>
+    <h2>Details</h2>
+    <h6>{{qrf.description}}</h6>
+  </ion-item>
 
-    <ion-item class="btns" no-lines>
-        <button ion-button block color="dred" (click)="join()">
+  <ion-item class="btns" no-lines>
+    <button ion-button block color="dred" (click)="join()">
             Join QRF Team
         </button>
-        <button ion-button block color="warn" (click)="decline()">
+    <button ion-button block color="warn" (click)="decline()">
             Decline
         </button>
-    </ion-item>
+  </ion-item>
 </ion-content>

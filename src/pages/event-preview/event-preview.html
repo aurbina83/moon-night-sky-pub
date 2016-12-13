@@ -19,22 +19,22 @@
 
 
 <ion-content padding>
-    <ion-item text-wrap>
-        <h3 text-center>Details:</h3>
-        <p>{{event.description}}</p>
-    </ion-item>
+  <ion-item text-wrap>
+    <h3 text-center>Details:</h3>
+    <p>{{event.description}}</p>
+  </ion-item>
 
-    <ion-item no-lines>
-        <h3 text-center>Current Roster</h3>
-        <ion-row>
-            <ion-col width-25 *ngFor="let u of event.attending">
-                <ion-avatar item-content>
-                    <img src="{{u.imgUrl}}" alt="">
-                </ion-avatar>
-                <h4>{{u.firstName}}</h4>
-                <h4>{{u.lastName}}</h4>
-                <p>{{u.branch}}</p>
-            </ion-col>
-        </ion-row>
-    </ion-item>
+  <ion-item no-lines>
+    <h3 text-center>Current Roster</h3>
+    <ion-row>
+      <ion-col width-25 *ngFor="let u of event.attending">
+        <ion-avatar item-content>
+          <img src="{{u.imgUrl}}" alt="">
+        </ion-avatar>
+        <h4>{{u.firstName}}</h4>
+        <h4>{{u.lastName}}</h4>
+        <p>{{u.branch}}</p>
+      </ion-col>
+    </ion-row>
+  </ion-item>
 </ion-content>

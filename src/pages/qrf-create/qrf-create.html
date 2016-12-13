@@ -1,36 +1,36 @@
 <ion-header>
 
-    <ion-navbar color="dblue">
-        <button ion-button menuToggle>
+  <ion-navbar color="dblue">
+    <button ion-button menuToggle>
             <ion-icon name="menu"></ion-icon>
         </button>
-        <ion-title>REQUEST QRF</ion-title>
-    </ion-navbar>
+    <ion-title>REQUEST QRF</ion-title>
+  </ion-navbar>
 
 </ion-header>
 
 
 <ion-content class="qrf-create">
-    <div [hidden]="!view">
-        <h6 class="warn"><strong>For support and emergencies only!</strong></h6>
-        <h1 class="title">QRF</h1>
-        <div class="intro">
-            <h6>Having a bad day? <br><br />Feeling down and out? <br><br />Ready to throw random throat punches? <br><br />Feel like you're slipping on the edge without a hand in sight? <br><br />In a bad situation that you need out of most riki-tik? </h6>
-        </div>
+  <div [hidden]="!view">
+    <h6 class="warn"><strong>For support and emergencies only!</strong></h6>
+    <h1 class="title">QRF</h1>
+    <div class="intro">
+      <h6>Having a bad day? <br><br />Feeling down and out? <br><br />Ready to throw random throat punches? <br><br />Feel like you're slipping on the edge without a hand in sight? <br><br />In a bad situation that you need out of most riki-tik? </h6>
+    </div>
 
-        <div class="info">
-            <strong>
+    <div class="info">
+      <strong>
             <p>
                 Every once in a while we all need a break from the kick to the gut life decides to give us, and sometimes we need that break like yesterday.
             </p>
 
             <p>If you have nobody to reach out to, VETERAN CONNECT has got your 6.</p>
             </strong>
-        </div>
+    </div>
 
-        <h2 class="title">How It Works</h2>
-        <div class="how">
-            <strong>
+    <h2 class="title">How It Works</h2>
+    <div class="how">
+      <strong>
             <p>Write up a description of what's going on, so your brothers and sisters have a heads up.</p>
             <p>VETERAN CONNECT will send an alert out to every veteran in your area. The first 5 to respond are your QRF Team.
                 <br><br> From there, you'll have access to a chat room with your QRF Team for 24 hours. You can just talk in the app, plan to meet up, or exchange phone numbers.
@@ -38,20 +38,20 @@
 
             <h6>Are you ready?</h6>
             </strong>
-            <button block color="dred" ion-button (click)="start()">Request QRF</button>
-        </div>
+      <button block color="dred" ion-button (click)="start()">Request QRF</button>
     </div>
-    <div class="qrf-form" [hidden]="!createView">
-        <div class="bar" text-center>
-            Dispatch QRF
-        </div>
-        <div class="content">
-            <ion-item no-lines>
-                <ion-label stacked>Brief the QRF Team. What do they need to know?!</ion-label>
-                <ion-textarea [(ngModel)]="qrf.description" rows="4" maxlength="1500" type="text"></ion-textarea>
-            </ion-item>
-            <p text-left>{{1500 - qrf.description.length}} characters remaining</p>
-            <button block ion-button color="dred" (click)="create()">Submit</button>
-        </div>
+  </div>
+  <div class="qrf-form" [hidden]="!createView">
+    <div class="bar" text-center>
+      Dispatch QRF
     </div>
+    <div class="content">
+      <ion-item no-lines>
+        <ion-label stacked>Brief the QRF Team. What do they need to know?!</ion-label>
+        <ion-textarea [(ngModel)]="qrf.description" rows="4" maxlength="1500" type="text"></ion-textarea>
+      </ion-item>
+      <p text-left>{{1500 - qrf.description.length}} characters remaining</p>
+      <button block ion-button color="dred" (click)="create()">Submit</button>
+    </div>
+  </div>
 </ion-content>

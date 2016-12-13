@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { AuthHttp } from 'angular2-jwt';
+import { Observable } from 'rxjs';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/toPromise'
 
 /*
   Generated class for the CommentService provider.
@@ -11,19 +13,11 @@ import 'rxjs/add/operator/map';
 */
 @Injectable()
 export class CommentService {
-    public api = "https://app.veteranconnect.co/api/v1/comments"
-  constructor(private http: Http, private authHttp: AuthHttp) {}
-
+  public api = "https://app.veteranconnect.co/api/v1/comments"
+  constructor(private http: Http, private authHttp: AuthHttp) { }
 
   public create(comment) {
-      return new Promise((resolve, reject) => {
-          this.authHttp.post(this.api, comment)
-          .map(res => res.json())
-          .subscribe(data => {
-                resolve(data);
-          }, err => {
-              reject(err.json());
-          })
-      })
+    return this.authHttp.post(this.api, comment)
+      .map(res => res.json()).toPromise();
   }
 }

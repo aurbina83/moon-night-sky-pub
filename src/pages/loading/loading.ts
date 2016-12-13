@@ -11,42 +11,43 @@ import {LoginPage} from '../login/login';
   Ionic pages and navigation.
 */
 @Component({
-    selector: 'loading-page',
-    templateUrl: 'loading.html'
+  selector: 'loading-page',
+  templateUrl: 'loading.html'
 })
 export class LoadingPage {
-    public status;
-    public load;
-    public token: boolean;
+  public status;
+  public load;
+  public token: boolean;
 
-    constructor(private navCtrl: NavController, private menu: MenuController, private UserService: UserService, private loadingCtrl: LoadingController, private platform: Platform) {
-        this.status = UserService.status;
-        this.load = this.loadingCtrl.create({});
-        this.load.present();
-    }
+  constructor(private navCtrl: NavController, private menu: MenuController, private UserService: UserService, private loadingCtrl: LoadingController, private platform: Platform) {
+    this.load = this.loadingCtrl.create({});
+    this.load.present();
+  }
 
-    ionViewWillLeave() {
-      this.menu.swipeEnable(true, 'menu1');
-    }
+  ionViewWillLeave() {
+    this.menu.swipeEnable(true, 'menu1');
+    this.status = this.UserService.setUser();
+  }
 
-    ionViewDidEnter() {
-        this.menu.swipeEnable(false, 'menu1');
-        this.preCheck();
-    }
+  ionViewDidEnter() {
+    this.menu.swipeEnable(false, 'menu1');
+    this.status.id ? this.check() : this.preCheck();
+  }
 
-    public preCheck(){
-        if(this.status._id){
-            this.check();
-        } else {
-            setTimeout(()=>{
-                this.check();
-            }, 300);
-        }
-    }
+  // if token is deleted from local storage, check SQlite. If token, set user and check()
+  public preCheck() {
+    this.UserService.tokenCheck()
+      .then(data => {
+        this.status = data;
+        this.check();
+      })
+      .catch(e => this.check());
+  }
 
-    public check() {
-        this.load.dismiss().then(()=>{
-            this.status._id ? this.navCtrl.setRoot(WelcomePage) : this.navCtrl.setRoot(LoginPage);
-        })
-    }
+  //Check status and navigate to welcome page or login page
+  public check() {
+    this.load.dismiss().then(() => {
+      this.status._id ? this.navCtrl.setRoot(WelcomePage) : this.navCtrl.setRoot(LoginPage);
+    })
+  }
 }

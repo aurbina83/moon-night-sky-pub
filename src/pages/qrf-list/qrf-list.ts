@@ -12,27 +12,27 @@ import {QrfChatPage} from '../qrf-chat/qrf-chat';
   Ionic pages and navigation.
 */
 @Component({
-    selector: 'qrf-list-page',
-    templateUrl: 'qrf-list.html'
+  selector: 'qrf-list-page',
+  templateUrl: 'qrf-list.html'
 })
 export class QrfListPage {
-    public events;
+  public events;
 
-    constructor(private navCtrl: NavController, private qrfSerivce: QrfService, private UserService: UserService, private alerts: Alerts, private loadingCtrl: LoadingController) {
-        let load = this.loadingCtrl.create({});
-        load.present();
+  constructor(private navCtrl: NavController, private qrfSerivce: QrfService, private UserService: UserService, private alerts: Alerts, private loadingCtrl: LoadingController) {
+    let load = this.loadingCtrl.create({});
+    load.present();
 
-        this.qrfSerivce.getMine().then((data) => {
-            load.dismiss();
-            this.events = data;
-        }, (err) => {
-            load.dismiss();
-            this.alerts.toast(err.message, "toastError");
-        })
-    }
+    this.qrfSerivce.getMine().subscribe((data) => {
+      load.dismiss();
+      this.events = data;
+    }, (err) => {
+      load.dismiss();
+      this.alerts.toast(err.message, "toastError");
+    })
+  }
 
-    public go(e) {
-        this.navCtrl.push(QrfChatPage, { _id: e._id });
-    }
+  public go(e) {
+    this.navCtrl.push(QrfChatPage, { _id: e._id });
+  }
 
 }

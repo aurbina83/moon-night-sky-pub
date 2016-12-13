@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar color="dblue">
-      <button ion-button menuToggle>
+    <button ion-button menuToggle>
         <ion-icon name="menu"></ion-icon>
       </button>
     <ion-title>TEAM CHAT</ion-title>
@@ -17,25 +17,25 @@
 
 
 <ion-content padding #chat id="chat">
-        <ion-item *ngFor="let c of messages" text-wrap>
-            <ion-avatar item-left>
-                <img src="{{c.imgUrl}}" alt="">
-            </ion-avatar>
-            <h4 >{{ c.firstName }} {{ c.lastName }}</h4>
-            <h5 >{{ c.message }}</h5>
-            <p > {{c.datePosted | momentFromNow }}</p>
-        </ion-item>
+  <ion-item *ngFor="let c of messages" text-wrap>
+    <ion-avatar item-left>
+      <img src="{{c.imgUrl}}" alt="">
+    </ion-avatar>
+    <h4>{{ c.firstName }} {{ c.lastName }}</h4>
+    <h5>{{ c.message }}</h5>
+    <p> {{c.datePosted | momentFromNow }}</p>
+  </ion-item>
 </ion-content>
 <ion-footer padding class="foot2" style="background-color: white;">
-    <ion-row>
-        <ion-col width-75>
-            <ion-item>
-                <ion-label stacked>Message</ion-label>
-                <ion-input [(ngModel)]="message" text-wrap type="text"></ion-input>
-            </ion-item>
-        </ion-col>
-        <ion-col width-25>
-            <button ion-button color="dred" outline (click)="socketM()"> Submit </button>
-        </ion-col>
-    </ion-row>
+  <ion-row>
+    <ion-col width-75>
+      <ion-item>
+        <ion-label stacked>Message</ion-label>
+        <ion-input [(ngModel)]="message" text-wrap type="text"></ion-input>
+      </ion-item>
+    </ion-col>
+    <ion-col width-25>
+      <button ion-button color="dred" outline (click)="socketM()"> Submit </button>
+    </ion-col>
+  </ion-row>
 </ion-footer>

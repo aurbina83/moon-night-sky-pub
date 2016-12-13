@@ -1,14 +1,16 @@
 qrf-accept-page {
-    img {
-        width: 100%;
-    }
-    ion-avatar img {
-        max-width: 50px !important;
-        max-height: 50px !important;
-        border-radius: 100% !important;
-    }
-    button {
-        height: 40px !important;
-        font-size: 20px !important;
-    }
+  img {
+    width: 100%;
+  }
+
+  ion-avatar img {
+    max-width: 50px !important;
+    max-height: 50px !important;
+    border-radius: 100% !important;
+  }
+
+  button {
+    height: 40px !important;
+    font-size: 20px !important;
+  }
 }

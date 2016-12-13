@@ -6,7 +6,7 @@
 -->
 <ion-header>
 
-    <!-- <ion-navbar color="dblue">
+  <!-- <ion-navbar color="dblue">
         <ion-title>Location Page</ion-title>
     </ion-navbar> -->
 
@@ -14,23 +14,23 @@
 
 
 <ion-content [ngSwitch]="drip">
-    <div class="wrap" padding>
-        <div class="header" *ngSwitchCase="true">
-            <h1 text-wrap text-center>WE GET IT!</h1>
-            <h2 text-wrap>Your name is on a list somewhere and those black helicopters <em>are in fact</em> following you.</h2>
-            <h4 text-wrap> Unfortunately, this app does not function without location permissions.</h4>
-            <h4 text-wrap>So if you want to continue, go to your settings below and change them.</h4>
-            <p text-wrap>We won't give your location to the NSA.</p>
-        </div>
-        <div class="btn-group" *ngSwitchCase="true">
-            <button ion-button block (click)="goToSettings()" class="btn">SETTINGS</button>
-        </div>
-        <div class="header" *ngSwitchCase="false">
-            <h1 text-wrap text-center>Thank You!</h1>
-            <h4 text-wrap> Now let's just make sure everything is up to snuff.</h4>
-        </div>
-        <div class="btn-group" *ngSwitchCase="false">
-            <button ion-button block (click)="test()" class="btn">TEST</button>
-        </div>
+  <div class="wrap" padding>
+    <div class="header" *ngSwitchCase="true">
+      <h1 text-wrap text-center>WE GET IT!</h1>
+      <h2 text-wrap>Your name is on a list somewhere and those black helicopters <em>are in fact</em> following you.</h2>
+      <h4 text-wrap> Unfortunately, this app does not function without location permissions.</h4>
+      <h4 text-wrap>So if you want to continue, go to your settings below and change them.</h4>
+      <p text-wrap>We won't give your location to the NSA.</p>
     </div>
+    <div class="btn-group" *ngSwitchCase="true">
+      <button ion-button block (click)="goToSettings()" class="btn">SETTINGS</button>
+    </div>
+    <div class="header" *ngSwitchCase="false">
+      <h1 text-wrap text-center>Thank You!</h1>
+      <h4 text-wrap> Now let's just make sure everything is up to snuff.</h4>
+    </div>
+    <div class="btn-group" *ngSwitchCase="false">
+      <button ion-button block (click)="test()" class="btn">TEST</button>
+    </div>
+  </div>
 </ion-content>

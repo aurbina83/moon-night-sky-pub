@@ -11,31 +11,31 @@ import { UserService } from "../../providers/user-service/user-service";
   Ionic pages and navigation.
 */
 @Component({
-    selector: 'pending-page',
-    templateUrl: 'pending.html'
+  selector: 'pending-page',
+  templateUrl: 'pending.html'
 })
 
 export class PendingPage {
-    status;
-    constructor(private navCtrl: NavController, private menu: MenuController, private UserService: UserService) {
-        this.status = UserService.status;
-    }
-    ionViewDidEnter() {
-        this.menu.swipeEnable(false, 'menu1');
-    }
+  status;
+  constructor(private navCtrl: NavController, private menu: MenuController, private UserService: UserService) {
+    this.status = UserService.status;
+  }
+  ionViewDidEnter() {
+    this.menu.swipeEnable(false, 'menu1');
+  }
 
-    ionViewWillLeave() {
-        this.menu.swipeEnable(true, 'menu1');
-    }
+  ionViewWillLeave() {
+    this.menu.swipeEnable(true, 'menu1');
+  }
 
 
-    click() {
-        this.UserService.logout();
-        this.navCtrl.setRoot(LoginPage);
-    }
+  click() {
+    this.UserService.logout();
+    this.navCtrl.setRoot(LoginPage);
+  }
 
-    route() {
-        this.navCtrl.setRoot(VerifyPage);
-    }
+  route() {
+    this.navCtrl.setRoot(VerifyPage);
+  }
 
 }

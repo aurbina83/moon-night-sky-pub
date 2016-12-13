@@ -1,14 +1,13 @@
 register-page {
+  form {
+    padding: 20px 0;
 
-    form{
-        padding: 20px 0;
-
-        ion-item {
-            margin: 20px 0 !important;
-        }
-        button {
-            margin-top: 40px !important;
-        }
+    ion-item {
+      margin: 20px 0 !important;
     }
 
+    button {
+      margin-top: 40px !important;
+    }
+  }
 }

@@ -1,5 +1,5 @@
 import {
-    Component
+  Component
 } from '@angular/core';
 import { NavController, MenuController, Platform } from 'ionic-angular';
 import { Diagnostic } from 'ionic-native';
@@ -43,23 +43,25 @@ import {WelcomePage} from '../welcome/welcome';
 })
 export class LocationPage {
 
-    drip;
-    permission;
+  drip;
+  permission;
 
   constructor(public navCtrl: NavController, public menu: MenuController, public platform: Platform) {
-      this.drip = true;
-      this.permission = false;
-      document.addEventListener('resume', () =>{
-          this.test();
-      })
+    this.drip = true;
+    this.permission = false;
+
+    // Listen for app to resume (come back from app settings)
+    document.addEventListener('resume', () => {
+      this.test();
+    })
   }
 
-  ionViewDidEnter(){
-      this.menu.swipeEnable(false, 'menu1');
+  ionViewDidEnter() {
+    this.menu.swipeEnable(false, 'menu1');
   }
 
-  ionViewWillLeave(){
-      this.menu.swipeEnable(true, 'menu1');
+  ionViewWillLeave() {
+    this.menu.swipeEnable(true, 'menu1');
   }
 
   ionViewDidLoad() {
@@ -67,29 +69,31 @@ export class LocationPage {
   }
 
   ionViewCanLeave() {
-      if(this.permission) return true;
-      else return false;
+    if (this.permission) return true;
+    else return false;
   }
 
-  toggle(){
-      setTimeout(() => this.drip = !this.drip, 3000);
+  // toggle(){
+  //     setTimeout(() => this.drip = !this.drip, 3000);
+  // }
+
+  //GO to device settings to grant locations, trigger animation
+  goToSettings() {
+    Diagnostic.switchToSettings().then(() => {
+      return;
+    }).catch(e => console.log(e));
   }
 
-  goToSettings(){
-      Diagnostic.switchToSettings().then(()=>{
-          this.toggle();
-      }).catch(e => this.toggle());
-  }
-
-  test(){
-      Diagnostic.getLocationAuthorizationStatus().then(status => {
-          if (status != "denied" || status != "not_requested" || status != "DENIED" || status == "NOT_REQUESTED"){
-              this.permission = true;
-              this.navCtrl.setRoot(WelcomePage);
-          }else {
-              this.toggle();
-          }
-      }).catch(e => this.toggle());
+  // Test whether location privelages granted. If not, prompt user to activate.
+  test() {
+    Diagnostic.getLocationAuthorizationStatus().then(status => {
+      if (status != "denied" || status != "not_requested" || status != "DENIED" || status == "NOT_REQUESTED") {
+        this.permission = true;
+        this.navCtrl.setRoot(WelcomePage);
+      } else {
+        return;
+      }
+    }).catch(e => console.log(e));
   }
 
 }

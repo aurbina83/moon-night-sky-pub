@@ -12,51 +12,52 @@ import { Alerts } from '../../providers/alerts/alerts';
   Ionic pages and navigation.
 */
 @Component({
-    selector: 'my-events-page',
-    templateUrl: 'my-events.html'
+  selector: 'my-events-page',
+  templateUrl: 'my-events.html'
 })
 export class MyEventsPage {
-    public events = [];
+  public events = [];
 
-    constructor(private navCtrl: NavController, private EventSerivce: EventService, private alert: Alerts, private loadingCtrl: LoadingController) {
-        let load = this.loadingCtrl.create({});
-        load.present();
-        this.EventSerivce.getMine().then((data) => {
-            load.dismiss().then(() =>{
-            this.events = this.events.concat(data);
-        })
-        }, err => {
-            load.dismiss().then(() =>{
-                this.alert.toast(err.message, "toastError");
-            })
-        });
+  constructor(private navCtrl: NavController, private EventSerivce: EventService, private alert: Alerts, private loadingCtrl: LoadingController) {
+    let load = this.loadingCtrl.create({});
+    load.present();
+    this.EventSerivce.getMine().subscribe((data) => {
+      load.dismiss().then(() => {
+        this.events = this.events.concat(data);
+      })
+    }, err => {
+      load.dismiss().then(() => {
+        this.alert.toast(err.message, "toastError");
+      })
+    });
 
-    }
+  }
 
-    ionViewDidEnter() {
+  ionViewDidEnter() {
 
-    }
+  }
 
-    public go(e) {
-        this.navCtrl.push(EventDetailsPage, { event: e })
-    }
+  // Go to event details page
+  public go(e) {
+    this.navCtrl.push(EventDetailsPage, { event: e })
+  }
 
-    public delete(e) {
-        let load = this.loadingCtrl.create({});
-        load.present();
-        this.EventSerivce.remove(e._id).then(() => {
-            load.dismiss();
-            this.events.splice(this.events.indexOf(e), 1);
-            this.alert.toast("Event Deleted!", null);
-        }, err => {
-            load.dismiss();
-            this.alert.toast(err.message, "toastError");
-        })
-    }
+  public delete(e) {
+    let load = this.loadingCtrl.create({});
+    load.present();
+    this.EventSerivce.remove(e._id).then(() => {
+      load.dismiss();
+      this.events.splice(this.events.indexOf(e), 1);
+      this.alert.toast("Event Deleted!", null);
+    }, err => {
+      load.dismiss();
+      this.alert.toast(err.message, "toastError");
+    })
+  }
 
-    public edit(e) {
-        this.navCtrl.push(EditPage, { event: e });
-    }
+  public edit(e) {
+    this.navCtrl.push(EditPage, { event: e });
+  }
 
 
 }

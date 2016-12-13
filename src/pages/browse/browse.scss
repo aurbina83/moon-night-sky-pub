@@ -1,46 +1,46 @@
 browse-page {
-	.browse {
-		background-color: #d6d5d5;
+  .browse {
+    background-color: #d6d5d5;
 
-		ion-list {
-			ion-list-header {
-				height: 20px;
-				background-color: white;
-			}
-		}
+    ion-list {
+      ion-list-header {
+        height: 20px;
+        background-color: white;
+      }
+    }
 
-		ion-card {
-			#friend {
-				h6 {
-					margin-left: 5px;
-				}
-			}
+    ion-card {
+      #friend {
+        h6 {
+          margin-left: 5px;
+        }
+      }
 
-			ion-avatar {
-				// position: absolute;
-				// #fbicon{
-				// 	position: relative;
-				// 	width: 100%;
-				// 	bottom: 10px;
-				// 	left: 36px;
-				// }
-				img {
-					max-width: 50px !important;
-					max-height: 50px !important;
-					border-radius: 100% !important;
-				}
-			}
+      ion-avatar {
+        // position: absolute;
+        // #fbicon{
+        // 	position: relative;
+        // 	width: 100%;
+        // 	bottom: 10px;
+        // 	left: 36px;
+        // }
+        img {
+          max-width: 50px !important;
+          max-height: 50px !important;
+          border-radius: 100% !important;
+        }
+      }
 
-			.btns {
-				height: 60px !important;
-				margin: 20px 0;
+      .btns {
+        height: 60px !important;
+        margin: 20px 0;
 
-				button {
-					height: 40px !important;
-					font-size: 15px;
-					font-weight: bold;
-				}
-			}
-		}
-	}
+        button {
+          height: 40px !important;
+          font-size: 15px;
+          font-weight: bold;
+        }
+      }
+    }
+  }
 }

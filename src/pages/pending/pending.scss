@@ -1,29 +1,27 @@
+.pending {
+  h1 {
+    text-align: center;
+  }
 
-    .pending {
-
-        h1 {
-            text-align: center;
-        }
-
-
-        .content{
-            h6 {
-                font-weight: 400 !important;
-            }
-
-            .accept{
-                color: green;
-            }
-            .deny{
-                color: red;
-            }
-        }
-
-        a{
-            text-decoration: none;
-        }
-
-        button {
-            margin: 5px 0;
-        }
+  .content {
+    h6 {
+      font-weight: 400 !important;
     }
+
+    .accept {
+      color: green;
+    }
+
+    .deny {
+      color: red;
+    }
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  button {
+    margin: 5px 0;
+  }
+}
